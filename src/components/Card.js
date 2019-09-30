@@ -1,0 +1,35 @@
+import React from "react";
+import styled from "styled-components/macro";
+
+export default function Card({ title, urlToImage, description }) {
+  return (
+    <CardStyled>
+      <ImgStyled src={urlToImage} alt="card_image" />
+      <ContentStyled>
+        <h3>{title}</h3>
+        <p>{description}</p>
+      </ContentStyled>
+    </CardStyled>
+  );
+}
+
+const ImgStyled = styled.img`
+  width: 100vw;
+`;
+
+const CardStyled = styled.section`
+  background-color: "#F9F6F2";
+  padding-bottom: 15px;
+  font-family: "Times New Roman", Times, serif;
+  p {
+    line-height: 1.3;
+  }
+  h3 {
+    margin: 0;
+  }
+`;
+
+const ContentStyled = styled.section`
+  padding: 15px;
+  box-shadow: 0 5px 0px #bdacac;
+`;
