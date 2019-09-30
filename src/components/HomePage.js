@@ -16,5 +16,6 @@ export default function Homepage({ cards }) {
 
 const HomepageStyled = styled.section`
   /* display: grid; */
+  /* grid-gap: 40px; */
   /* text-align: center; */
 `;

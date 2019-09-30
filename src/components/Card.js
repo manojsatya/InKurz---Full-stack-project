@@ -19,7 +19,8 @@ const ImgStyled = styled.img`
 
 const CardStyled = styled.section`
   background-color: "#F9F6F2";
-  padding-bottom: 15px;
+  /* padding-bottom: 15px; */
+  /* margin-bottom: 40px; */
   font-family: "Times New Roman", Times, serif;
   p {
     line-height: 1.3;
@@ -31,5 +32,6 @@ const CardStyled = styled.section`
 
 const ContentStyled = styled.section`
   padding: 15px;
+  margin-bottom: 30px;
   box-shadow: 0 5px 0px #bdacac;
 `;
