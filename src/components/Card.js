@@ -28,7 +28,7 @@ export default function Card({
     setTimeout(() => {
       setMsg("");
     }, 3000);
-  });
+  }, [bookmark]);
 
   function handleBookmarkClick(event) {
     event.stopPropagation();
@@ -109,7 +109,8 @@ const FlashStyled = styled.section`
   bottom: 40vh;
   background: #721313;
   border-radius: 20px;
-
+  /* opacity: ${props => (props.bookmarkClick ? "1" : "0")};
+  transition: all 0.5s; */
   p {
     padding: 8px;
     margin: 0;
