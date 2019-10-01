@@ -9,10 +9,7 @@ export default function App() {
       articles: []
     }
   ]);
-  // const url =
-  //   "https://newsapi.org/v2/top-headlines?" +
-  //   "country=de&" +
-  //   "apiKey=020b3817a9ee4c8387dd3bcfac3eb12e";
+
   useEffect(() => {
     const fetchCard = async () => {
       const result = await axios(
@@ -24,9 +21,13 @@ export default function App() {
     };
     fetchCard();
   }, []);
+
+  function handleBookmarkClick() {
+    console.log("Hello I am here");
+  }
   return (
     <AppStyled>
-      <HomePage cards={cards} />
+      <HomePage cards={cards} onBookmarkClick={handleBookmarkClick} />
     </AppStyled>
   );
 }
