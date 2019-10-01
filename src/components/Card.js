@@ -1,13 +1,17 @@
 import React from "react";
 import styled from "styled-components/macro";
+// import { mongo } from "mongoose";
+const moment = require("moment");
 
-export default function Card({ title, urlToImage, description }) {
+export default function Card({ title, urlToImage, description, publishedAt }) {
+  const diffTime = moment(publishedAt).fromNow();
   return (
     <CardStyled>
       <ImgStyled src={urlToImage} alt="card_image" />
       <ContentStyled>
         <h3>{title}</h3>
         <p>{description}</p>
+        <TimeStyled>{diffTime}</TimeStyled>
       </ContentStyled>
     </CardStyled>
   );
@@ -15,6 +19,7 @@ export default function Card({ title, urlToImage, description }) {
 
 const ImgStyled = styled.img`
   width: 100vw;
+  margin-top: 0;
 `;
 
 const CardStyled = styled.section`
@@ -34,4 +39,9 @@ const ContentStyled = styled.section`
   padding: 15px;
   margin-bottom: 30px;
   box-shadow: 0 5px 0px #bdacac;
+`;
+
+const TimeStyled = styled.p`
+  font-style: italic;
+  color: #721313;
 `;

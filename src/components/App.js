@@ -17,7 +17,7 @@ export default function App() {
     const fetchCard = async () => {
       const result = await axios(
         "https://newsapi.org/v2/top-headlines?" +
-          "country=de&" +
+          "country=us&" +
           "apiKey=020b3817a9ee4c8387dd3bcfac3eb12e"
       );
       setCards(result.data.articles);
