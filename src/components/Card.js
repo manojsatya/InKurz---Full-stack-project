@@ -1,7 +1,14 @@
 import React from "react";
 import styled from "styled-components/macro";
-// import { mongo } from "mongoose";
+import PropTypes from "prop-types";
 const moment = require("moment");
+
+Card.propTypes = {
+  title: PropTypes.string,
+  urlToImage: PropTypes.string,
+  description: PropTypes.string,
+  publishedAt: PropTypes.string
+};
 
 export default function Card({ title, urlToImage, description, publishedAt }) {
   const diffTime = moment(publishedAt).fromNow();
