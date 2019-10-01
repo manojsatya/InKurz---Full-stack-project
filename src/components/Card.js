@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components/macro";
 import PropTypes from "prop-types";
-const moment = require("moment");
+import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
+import BookmarkIcon from "@material-ui/icons/Bookmark";
 
 Card.propTypes = {
   title: PropTypes.string,
@@ -10,16 +11,54 @@ Card.propTypes = {
   publishedAt: PropTypes.string
 };
 
-export default function Card({ title, urlToImage, description, publishedAt }) {
+export default function Card({
+  title,
+  urlToImage,
+  description,
+  publishedAt,
+  onBookmarkClick
+}) {
+  const moment = require("moment");
   const diffTime = moment(publishedAt).fromNow();
+
+  const [bookmark, setBookmark] = useState(false);
+  const [msg, setMsg] = useState("");
+
+  useEffect(() => {
+    setTimeout(() => {
+      setMsg("");
+    }, 3000);
+  });
+
+  function handleBookmarkClick(event) {
+    event.stopPropagation();
+    bookmark ? setBookmark(false) : setBookmark(true);
+    bookmark ? setMsg("Removed Bookmark") : setMsg("Bookmarked Successfully");
+    onBookmarkClick();
+  }
+
+  function chooseBookmark() {
+    return bookmark ? (
+      <BookmarkIcon fontSize="large" onClick={handleBookmarkClick} />
+    ) : (
+      <BookmarkBorderIcon fontSize="large" onClick={handleBookmarkClick} />
+    );
+  }
+
   return (
     <CardStyled>
       <ImgStyled src={urlToImage} alt="card_image" />
       <ContentStyled>
+        <TimeStyled>{diffTime}</TimeStyled>
         <h3>{title}</h3>
         <p>{description}</p>
-        <TimeStyled>{diffTime}</TimeStyled>
+        <BelowContent>
+          <TimeStyled>{diffTime}</TimeStyled>
+          {chooseBookmark()}
+        </BelowContent>
       </ContentStyled>
+      {/* {chooseFlashMessage()} */}
+      <FlashStyled>{msg}</FlashStyled>
     </CardStyled>
   );
 }
@@ -31,8 +70,6 @@ const ImgStyled = styled.img`
 
 const CardStyled = styled.section`
   background-color: "#F9F6F2";
-  /* padding-bottom: 15px; */
-  /* margin-bottom: 40px; */
   font-family: "Times New Roman", Times, serif;
   p {
     line-height: 1.3;
@@ -50,5 +87,31 @@ const ContentStyled = styled.section`
 
 const TimeStyled = styled.p`
   font-style: italic;
+  padding: 0;
+  margin: 0;
   color: #721313;
+`;
+
+const BelowContent = styled.section`
+  padding: 0;
+  margin: 0;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+const FlashStyled = styled.section`
+  position: fixed;
+  color: white;
+  text-align: center;
+  margin: 0 auto;
+  width: 100%;
+  bottom: 40vh;
+  background: #721313;
+  border-radius: 20px;
+
+  p {
+    padding: 8px;
+    margin: 0;
+  }
 `;
