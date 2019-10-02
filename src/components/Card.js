@@ -57,7 +57,6 @@ export default function Card({
           {chooseBookmark()}
         </BelowContent>
       </ContentStyled>
-      {/* {chooseFlashMessage()} */}
       <FlashStyled>{msg}</FlashStyled>
     </CardStyled>
   );

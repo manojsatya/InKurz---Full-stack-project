@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from "react";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from "./HomePage";
 import styled from "styled-components/macro";
 import axios from "axios";
+import Navigation from "./common/Navigation";
+import Bookmark from "./Bookmark";
 
 export default function App() {
   const [cards, setCards] = useState([
@@ -22,20 +25,38 @@ export default function App() {
     fetchCard();
   }, []);
 
-  function handleBookmarkClick() {
+  function handleBookmarkClick(card) {
     console.log("Hello I am here");
+    console.log(card);
   }
   return (
-    <AppStyled>
-      <HomePage cards={cards} onBookmarkClick={handleBookmarkClick} />
-    </AppStyled>
+    <Router>
+      <AppStyled>
+        <Switch>
+          <Route
+            exact
+            path="/"
+            render={() => (
+              <HomePage cards={cards} onBookmarkClick={handleBookmarkClick} />
+            )}
+          />
+          <Route path="/bookmarks" render={() => <Bookmark />} />
+        </Switch>
+        {/* <HomePage cards={cards} onBookmarkClick={handleBookmarkClick} /> */}
+        <Navigation />
+      </AppStyled>
+    </Router>
   );
 }
 
 const AppStyled = styled.section`
   display: grid;
-  grid-gap: 20px;
   grid-template-rows: auto 48px;
-  height: 100vh;
+  /* position: fixed; */
+  left: 0;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  height: 100%;
   font-family: sans-serif;
 `;
