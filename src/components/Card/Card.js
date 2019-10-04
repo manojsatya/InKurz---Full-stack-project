@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components/macro";
 import PropTypes from "prop-types";
-import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
+// import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
 
 Card.propTypes = {
@@ -22,7 +22,6 @@ export default function Card({
   const moment = require("moment");
   const diffTime = moment(publishedAt).fromNow();
 
-  const [bookmark, setBookmark] = useState(false);
   const [msg, setMsg] = useState("");
 
   useEffect(() => {
@@ -33,18 +32,21 @@ export default function Card({
 
   function handleBookmarkClick(event) {
     event.stopPropagation();
-    bookmark && isBookmarked ? setBookmark(false) : setBookmark(true);
-    bookmark && isBookmarked
+    isBookmarked
       ? setMsg("Removed Bookmark")
       : setMsg("Bookmarked Successfully");
     onBookmarkClick();
   }
 
   function chooseBookmark() {
-    return bookmark || isBookmarked ? (
-      <BookmarkIcon fontSize="large" onClick={handleBookmarkClick} />
+    return isBookmarked ? (
+      <BookmarkIcon
+        fontSize="large"
+        onClick={handleBookmarkClick}
+        style={{ fill: "brown" }}
+      />
     ) : (
-      <BookmarkBorderIcon fontSize="large" onClick={handleBookmarkClick} />
+      <BookmarkIcon fontSize="large" onClick={handleBookmarkClick} />
     );
   }
 
@@ -56,9 +58,8 @@ export default function Card({
         <h3>{title}</h3>
         <p>{description}</p>
         <BelowContent>
-          <TimeStyled>{diffTime}</TimeStyled>
+          {/* <TimeStyled>{diffTime}</TimeStyled> */}
           {chooseBookmark()}
-          {/* <BookmarkIcon /> */}
         </BelowContent>
       </ContentStyled>
       <FlashStyled>{msg}</FlashStyled>

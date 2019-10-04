@@ -16,4 +16,5 @@ server.use(express.json());
 server.use(cors());
 server.set("json spaces", 2);
 
+// server.use("/newsAPI", require("./routes/newsAPIRoute"));
 server.use("/news", require("./routes/cards"));
