@@ -8,7 +8,9 @@ Card.propTypes = {
   title: PropTypes.string,
   urlToImage: PropTypes.string,
   description: PropTypes.string,
-  publishedAt: PropTypes.string
+  publishedAt: PropTypes.string,
+  onBookmarkClick: PropTypes.func,
+  isBookmarked: PropTypes.bool
 };
 
 export default function Card({
@@ -28,7 +30,7 @@ export default function Card({
     setTimeout(() => {
       setMsg("");
     }, 3000);
-  }, [bookmark]);
+  }, [isBookmarked]);
 
   function handleBookmarkClick(event) {
     event.stopPropagation();
@@ -68,7 +70,7 @@ export default function Card({
 }
 
 const ImgStyled = styled.img`
-  width: 100vw;
+  width: 100%;
   margin-top: 0;
 `;
 

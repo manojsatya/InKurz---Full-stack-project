@@ -13,7 +13,6 @@ export default function App() {
   }, []);
 
   function handleBookmarkClick(card) {
-    console.log("Hello I am here");
     patchCard(card._id, { isBookmarked: !card.isBookmarked }).then(
       updatedCard => {
         const index = cards.findIndex(card => card._id === updatedCard._id);
@@ -61,5 +60,6 @@ const AppStyled = styled.section`
   top: 0;
   bottom: 0;
   height: 100%;
+  width: 100%;
   font-family: sans-serif;
 `;
