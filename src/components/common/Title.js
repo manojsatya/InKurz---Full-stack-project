@@ -24,13 +24,13 @@ const SpanStyled = styled.span`
 
 const LineStyledTop = styled.hr`
   border: 1.5px solid black;
-  width: 95vw;
+  width: 95%;
   margin: 2px auto 2px;
 `;
 
 const LineStyledBottom = styled.hr`
   border: 0.5px solid black;
-  width: 85vw;
+  width: 85%;
   margin-top: 0px;
 `;
 // 721313

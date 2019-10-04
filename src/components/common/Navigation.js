@@ -13,8 +13,8 @@ import { Link } from "react-router-dom";
 const useStyles = makeStyles({
   root: {
     // borderRadius: "1.5rem 1.5rem 0 0",
-    width: "100vw",
-    height: "10vh",
+    width: "100%",
+    height: "10%",
     backgroundColor: "#F9F6F2",
     position: "fixed",
     bottom: 0,
