@@ -16,7 +16,8 @@ export default function Card({
   urlToImage,
   description,
   publishedAt,
-  onBookmarkClick
+  onBookmarkClick,
+  isBookmarked
 }) {
   const moment = require("moment");
   const diffTime = moment(publishedAt).fromNow();
@@ -32,13 +33,15 @@ export default function Card({
 
   function handleBookmarkClick(event) {
     event.stopPropagation();
-    bookmark ? setBookmark(false) : setBookmark(true);
-    bookmark ? setMsg("Removed Bookmark") : setMsg("Bookmarked Successfully");
+    bookmark && isBookmarked ? setBookmark(false) : setBookmark(true);
+    bookmark && isBookmarked
+      ? setMsg("Removed Bookmark")
+      : setMsg("Bookmarked Successfully");
     onBookmarkClick();
   }
 
   function chooseBookmark() {
-    return bookmark ? (
+    return bookmark || isBookmarked ? (
       <BookmarkIcon fontSize="large" onClick={handleBookmarkClick} />
     ) : (
       <BookmarkBorderIcon fontSize="large" onClick={handleBookmarkClick} />
@@ -55,6 +58,7 @@ export default function Card({
         <BelowContent>
           <TimeStyled>{diffTime}</TimeStyled>
           {chooseBookmark()}
+          {/* <BookmarkIcon /> */}
         </BelowContent>
       </ContentStyled>
       <FlashStyled>{msg}</FlashStyled>

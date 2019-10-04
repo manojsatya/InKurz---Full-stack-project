@@ -1,5 +1,5 @@
 import React from "react";
-import Card from "./Card";
+import Card from "./Card/Card";
 import Title from "./common/Title";
 import styled from "styled-components/macro";
 import { uid } from "react-uid";
