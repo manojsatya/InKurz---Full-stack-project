@@ -4,7 +4,7 @@ import HomePage from "../HomePage";
 import styled from "styled-components/macro";
 // import axios from "axios";
 import Navigation from "./Navigation";
-import { getCards, patchCard } from "../Card/servicesCard";
+import { getCards, patchCard } from "../cards/servicesCard";
 
 export default function App() {
   const [cards, setCards] = useState([]);
@@ -24,6 +24,7 @@ export default function App() {
       }
     );
   }
+
   return (
     <Router>
       <AppStyled>
