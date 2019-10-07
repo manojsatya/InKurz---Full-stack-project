@@ -8,6 +8,12 @@ const Card = mongoose.model("Card", {
   description: String,
   content: String,
   isBookmarked: Boolean,
+  // comments: [
+  //   {
+  //     type: mongoose.Schema.Types.ObjectId,
+  //     ref: "Comment"
+  //   }
+  // ]
   comments: [String]
 });
 
