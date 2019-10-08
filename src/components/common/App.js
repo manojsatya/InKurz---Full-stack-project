@@ -2,7 +2,6 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from "../HomePage";
 import styled from "styled-components/macro";
-// import axios from "axios";
 import Navigation from "./Navigation";
 import { getCards, patchCard } from "../cards/servicesCard";
 
@@ -38,12 +37,12 @@ export default function App() {
           />
           <Route
             path="/bookmarks"
-            // render={() => (
-            //   <HomePage
-            //     cards={cardsBookmark}
-            //     onBookmarkClick={handleBookmarkClick}
-            //   />
-            // )}
+            render={() => (
+              <HomePage
+                cards={cards.filter(card => card.isBookmarked)}
+                onBookmarkClick={handleBookmarkClick}
+              />
+            )}
           />
         </Switch>
         {/* <HomePage cards={cards} onBookmarkClick={handleBookmarkClick} /> */}

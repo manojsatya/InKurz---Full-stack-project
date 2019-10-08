@@ -70,7 +70,7 @@ export default function Card({
         style={{ fill: "brown" }}
       />
     ) : (
-      <BookmarkIcon fontSize="default" onClick={handleBookmarkClick} />
+      <BookmarkIcon fontSize="large" onClick={handleBookmarkClick} />
     );
   }
 
@@ -99,7 +99,7 @@ export default function Card({
           <FormInputStyled
             placeholder="Add a comment..."
             autoComplete="off"
-            name="text"
+            name="comment"
             onChange={event => setComment(event.target.value)}
             active={comment}
           />
