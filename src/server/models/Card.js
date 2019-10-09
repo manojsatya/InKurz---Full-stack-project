@@ -13,12 +13,6 @@ const Card = mongoose.model("Card", {
   content: String,
   isBookmarked: Boolean,
   comments: [commentSchema]
-  // comments: [
-  //   {
-  //     type: mongoose.Schema.Types.ObjectId,
-  //     ref: "Comment"
-  //   }
-  // ]
 });
 
 module.exports = Card;

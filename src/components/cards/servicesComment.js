@@ -1,5 +1,11 @@
-export function getComments() {
-  return fetchComments();
+export function getComments(id, data = "") {
+  return fetch("/news/" + id + "/comments", {
+    method: "GET",
+    body: undefined,
+    headers: {
+      "content-type": "application/json"
+    }
+  }).then(res => res.json());
 }
 
 export function postComment(id, data) {
