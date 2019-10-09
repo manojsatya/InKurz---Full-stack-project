@@ -6,10 +6,10 @@ export default function Comments({ showComments, comments }) {
   // console.log(showComments);
   return (
     <CommentsSectionStyled className={showComments ? "visible" : null}>
-      {comments.map((comment, index) => (
+      {comments.map((item, index) => (
         <CommentsStyled key={index}>
           <img src="https://source.unsplash.com/random" alt="img-1" />
-          <p>{comment}</p>
+          <p>{item.comment}</p>
         </CommentsStyled>
       ))}
     </CommentsSectionStyled>

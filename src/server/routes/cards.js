@@ -7,6 +7,12 @@ router.get("/", (req, res) => {
     .catch(err => res.json(err));
 });
 
+router.get("/:id", (req, res) => {
+  Card.find({ _id: req.params.id })
+    .then(card => res.json(card))
+    .catch(err => res.json(err));
+});
+
 router.post("/", (req, res) => {
   Card.create(req.body)
     .then(card => res.json(card))

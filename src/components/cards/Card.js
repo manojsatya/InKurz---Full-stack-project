@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components/macro";
 import PropTypes from "prop-types";
-// import BookmarkBorderIcon from "@material-ui/icons/BookmarkBorder";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
 import Comments from "./Comments";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import { postComment } from "../cards/servicesComment";
 
 Card.propTypes = {
   title: PropTypes.string,
@@ -18,13 +16,15 @@ Card.propTypes = {
 };
 
 export default function Card({
+  _id,
   title,
   comments,
   urlToImage,
   description,
   publishedAt,
   onBookmarkClick,
-  isBookmarked
+  isBookmarked,
+  onCommentSubmit
 }) {
   const moment = require("moment");
   const diffTime = moment(publishedAt).fromNow();
@@ -43,15 +43,12 @@ export default function Card({
     setisCommentsVisible(!isCommentsVisible);
   }
 
-  function createComment(event) {
+  function handleCommentSubmit(event) {
     event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
-    const comment = Object.fromEntries(formData);
-    // console.log(comment);
-    postComment(comment.text).then(comment => {
-      setComment([...comments, comment]);
-    });
+    const data = Object.fromEntries(formData);
+    onCommentSubmit(_id, data);
   }
 
   function handleBookmarkClick(event) {
@@ -95,7 +92,7 @@ export default function Card({
     return (
       <FormSection>
         <AccountCircleIcon fontSize="large" style={{ marginTop: "10px" }} />
-        <form onSubmit={createComment}>
+        <form onSubmit={handleCommentSubmit}>
           <FormInputStyled
             placeholder="Add a comment..."
             autoComplete="off"
@@ -129,15 +126,8 @@ export default function Card({
           </p>
           {chooseBookmark()}
         </BelowContent>
-        <Comments
-          comments={comments}
-          showComments={isCommentsVisible}
-          // onClick={toggleComments}
-        />
+        <Comments comments={comments} showComments={isCommentsVisible} />
         {inputComment()}
-        {/* <FormStyled>
-          <input placeholder="Add a comment..." />
-        </FormStyled> */}
       </ContentStyled>
 
       <FlashStyled>{msg}</FlashStyled>
