@@ -6,7 +6,6 @@ import { postComment } from "./cards/servicesComment";
 
 export default function Homepage({ cards, onBookmarkClick }) {
   function onCommentSubmit(id, data) {
-    console.log(data, id);
     postComment(id, data);
   }
   return (
