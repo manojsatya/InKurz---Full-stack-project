@@ -33,7 +33,7 @@ export default function Card({
   const [msg, setMsg] = useState("");
   const [isCommentsVisible, setisCommentsVisible] = useState(false);
   const [commentLength, setCommentLength] = useState("");
-  const [commentChk, setCommentChk] = useState([]);
+  const [commentsList, setCommentsList] = useState([]);
 
   useEffect(() => {
     setTimeout(() => {
@@ -42,7 +42,7 @@ export default function Card({
   }, [isBookmarked]);
 
   useEffect(() => {
-    getComments(_id).then(setCommentChk);
+    getComments(_id).then(setCommentsList);
   }, []);
 
   function toggleComments() {
@@ -54,7 +54,7 @@ export default function Card({
     const form = event.target;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
-    onCommentSubmit(_id, data).then(card => setCommentChk(card.comments));
+    onCommentSubmit(_id, data).then(card => setCommentsList(card.comments));
     form.reset();
     form.comment.focus();
   }
@@ -124,17 +124,17 @@ export default function Card({
         <BelowContent>
           {/* <TimeStyled>{diffTime}</TimeStyled> */}
           <p onClick={toggleComments}>
-            {commentChk.length > 1 && commentChk.length + " "}
+            {commentsList.length > 1 && commentsList.length + " "}
 
-            {commentChk.length === 0
+            {commentsList.length === 0
               ? "Add comment"
-              : commentChk.length === 1
+              : commentsList.length === 1
               ? "1 comment"
               : "comments"}
           </p>
           {chooseBookmark()}
         </BelowContent>
-        <Comments comments={commentChk} showComments={isCommentsVisible} />
+        <Comments comments={commentsList} showComments={isCommentsVisible} />
         {inputComment()}
       </ContentStyled>
 
