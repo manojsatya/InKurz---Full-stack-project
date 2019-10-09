@@ -2,8 +2,8 @@ export function getComments() {
   return fetchComments();
 }
 
-export function postComment(data) {
-  return fetchComments({ method: "POST", data });
+export function postComment(id, data) {
+  return fetchComments({ method: "POST", id, data });
 }
 
 function fetchComments({ method = "GET", id = "", data } = {}) {

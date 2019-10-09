@@ -2,8 +2,12 @@ import React from "react";
 import Card from "./cards/Card";
 import Title from "./common/Title";
 import styled from "styled-components/macro";
+import { postComment } from "./cards/servicesComment";
 
 export default function Homepage({ cards, onBookmarkClick }) {
+  function onCommentSubmit(id, data) {
+    postComment(id, data);
+  }
   return (
     <HomepageStyled>
       <Title />
@@ -12,6 +16,7 @@ export default function Homepage({ cards, onBookmarkClick }) {
           key={card._id}
           {...card}
           onBookmarkClick={() => onBookmarkClick(card)}
+          onCommentSubmit={onCommentSubmit}
         />
       ))}
     </HomepageStyled>
