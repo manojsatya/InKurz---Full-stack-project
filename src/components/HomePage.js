@@ -6,7 +6,7 @@ import { postComment } from "./cards/servicesComment";
 
 export default function Homepage({ cards, onBookmarkClick }) {
   function onCommentSubmit(id, data) {
-    postComment(id, data);
+    return postComment(id, data);
   }
   return (
     <HomepageStyled>

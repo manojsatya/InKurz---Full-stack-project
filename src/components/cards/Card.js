@@ -5,6 +5,7 @@ import BookmarkIcon from "@material-ui/icons/Bookmark";
 import Comments from "./Comments";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import { getComments } from "./servicesComment";
 
 Card.propTypes = {
   title: PropTypes.string,
@@ -18,7 +19,7 @@ Card.propTypes = {
 export default function Card({
   _id,
   title,
-  comments,
+  // comments,
   urlToImage,
   description,
   publishedAt,
@@ -31,13 +32,18 @@ export default function Card({
 
   const [msg, setMsg] = useState("");
   const [isCommentsVisible, setisCommentsVisible] = useState(false);
-  const [comment, setComment] = useState("");
+  const [commentLength, setCommentLength] = useState("");
+  const [commentChk, setCommentChk] = useState([]);
 
   useEffect(() => {
     setTimeout(() => {
       setMsg("");
     }, 3000);
   }, [isBookmarked]);
+
+  useEffect(() => {
+    getComments(_id).then(setCommentChk);
+  }, []);
 
   function toggleComments() {
     setisCommentsVisible(!isCommentsVisible);
@@ -48,7 +54,9 @@ export default function Card({
     const form = event.target;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
-    onCommentSubmit(_id, data);
+    onCommentSubmit(_id, data).then(card => setCommentChk(card.comments));
+    form.reset();
+    form.comment.focus();
   }
 
   function handleBookmarkClick(event) {
@@ -97,10 +105,10 @@ export default function Card({
             placeholder="Add a comment..."
             autoComplete="off"
             name="comment"
-            onChange={event => setComment(event.target.value)}
-            active={comment}
+            onChange={event => setCommentLength(event.target.value)}
+            active={commentLength}
           />
-          {comment.length >= 1 && showButton()}
+          {commentLength.length >= 1 && showButton()}
         </form>
       </FormSection>
     );
@@ -116,17 +124,17 @@ export default function Card({
         <BelowContent>
           {/* <TimeStyled>{diffTime}</TimeStyled> */}
           <p onClick={toggleComments}>
-            {comments.length > 1 && comments.length + " "}
+            {commentChk.length > 1 && commentChk.length + " "}
 
-            {comments.length === 0
+            {commentChk.length === 0
               ? "Add comment"
-              : comments.length === 1
+              : commentChk.length === 1
               ? "1 comment"
               : "comments"}
           </p>
           {chooseBookmark()}
         </BelowContent>
-        <Comments comments={comments} showComments={isCommentsVisible} />
+        <Comments comments={commentChk} showComments={isCommentsVisible} />
         {inputComment()}
       </ContentStyled>
 

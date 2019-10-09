@@ -1,10 +1,12 @@
 const router = require("express").Router();
 const Card = require("../models/Card");
-const Comment = require("../models/Comment");
 
-router.get("/", (req, res) => {
-  Card.find({ _id: req.params.id })
-    .then(comments => res.json(comments))
+router.get("/:id/comments", (req, res) => {
+  Card.findById(req.params.id)
+    .then(card => {
+      const comments = card.comments;
+      res.json(comments);
+    })
     .catch(err => res.json(err));
 });
 
