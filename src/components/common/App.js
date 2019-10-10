@@ -2,11 +2,13 @@ import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from "../HomePage";
 import styled from "styled-components/macro";
-import Navigation from "./Navigation";
+// import Navigation from "./Navigation";
 import { getCards, patchCard } from "../cards/servicesCard";
+import NavigationNew from "./NavigationNew";
 
 export default function App() {
   const [cards, setCards] = useState([]);
+  // const [bookmarkCount, setBookmarkCount] = useState(0)
   useEffect(() => {
     getCards().then(setCards);
   }, []);
@@ -23,6 +25,14 @@ export default function App() {
       }
     );
   }
+
+  function bookmarkCount() {
+    const bookmarkCountNum = cards.filter(card => card.isBookmarked).length;
+    // console.log(bookmarkCountNum);
+    return bookmarkCountNum;
+  }
+
+  // bookmarkCount();
 
   return (
     <Router>
@@ -46,7 +56,8 @@ export default function App() {
           />
         </Switch>
         {/* <HomePage cards={cards} onBookmarkClick={handleBookmarkClick} /> */}
-        <Navigation />
+        {/* <Navigation /> */}
+        <NavigationNew bookmarkCount={bookmarkCount()} />
       </AppStyled>
     </Router>
   );
@@ -55,11 +66,12 @@ export default function App() {
 const AppStyled = styled.section`
   display: grid;
   grid-template-rows: auto 48px;
+  /* position: fixed; */
   left: 0;
   right: 0;
   top: 0;
   bottom: 0;
-  height: 100%;
-  width: 100%;
+  /* height: 100%;
+  width: 100%; */
   font-family: sans-serif;
 `;

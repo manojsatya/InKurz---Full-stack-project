@@ -12,6 +12,7 @@
     "moment": "^2.24.0",
     "mongoose": "^5.7.1",
     "node-fetch": "^2.6.0",
+    "node-schedule": "^1.3.2",
     "nodemon": "^1.19.3",
     "npm-run-all": "^4.1.5",
     "prop-types": "^15.7.2",
@@ -19,12 +20,14 @@
     "react-dom": "^16.10.1",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.1.2",
-    "styled-components": "^4.4.0"
+    "styled-components": "^4.4.0",
+    "styled-icons": "^8.4.2"
   },
   "scripts": {
-    "start": "run-p server dev",
+    "start": "run-p server dev scheduler",
     "server": "nodemon src/server/server.js",
     "dev": "react-scripts start",
+    "scheduler": "nodemon src/server/routes/newsAPIRoute.js",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
