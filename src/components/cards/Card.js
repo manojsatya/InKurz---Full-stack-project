@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import styled from "styled-components/macro";
+import styled, { keyframes } from "styled-components/macro";
 import PropTypes from "prop-types";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
 import Comments from "./Comments";
@@ -81,18 +81,19 @@ export default function Card({
 
   function showButton() {
     return (
-      <button type="submit">
+      <ButtonStyled type="submit">
         <ArrowForwardIcon
           fontSize="default"
           style={{
             marginBottom: "-7px",
             backgroundColor: "brown",
             borderRadius: "50%",
-            color: "white",
-            transitionDelay: "all 3s"
+            color: "white"
+            // animationDelay: "2s"
+            // transitionDelay: "all 30s"
           }}
         />
-      </button>
+      </ButtonStyled>
     );
   }
 
@@ -214,5 +215,21 @@ const FormInputStyled = styled.input`
   width: ${props => (props.active.length >= 1 ? "78%" : "95%")};
   padding: 10px 5px 5px 10px;
   border-radius: 0.4rem;
-  transition: width 0.5s 0.25s;
+  /* transition: width 0.25s; */
+`;
+
+const submitButtonAnimation = keyframes`
+from {
+  left : 100px;
+}
+to {
+  left: 0px;
+}
+`;
+
+const ButtonStyled = styled.button`
+  animation: ${submitButtonAnimation} 1s linear;
+  animation-delay: 1s;
+  animation-iteration-count: 1;
+  /* transition-delay: 10s; */
 `;

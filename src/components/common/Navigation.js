@@ -4,10 +4,11 @@ import BottomNavigation from "@material-ui/core/BottomNavigation";
 import BottomNavigationAction from "@material-ui/core/BottomNavigationAction";
 import HomeIcon from "@material-ui/icons/Home";
 import BookmarkIcon from "@material-ui/icons/Bookmark";
-import AppsIcon from "@material-ui/icons/Apps";
+// import AppsIcon from "@material-ui/icons/Apps";
 // import FavoriteIcon from "@material-ui/icons/Favorite";
 // import AddIcon from "@material-ui/icons/Add";
 // import SettingsIcon from "@material-ui/icons/SettingsApplications";
+// import Badge from "@material-ui/core/Badge";
 import { Link } from "react-router-dom";
 
 const useStyles = makeStyles({
@@ -25,8 +26,18 @@ const useStyles = makeStyles({
   }
 });
 
+// const useBadgeStyles = makeStyles(theme => ({
+//   margin: {
+//     margin: theme.spacing(2)
+//   },
+//   padding: {
+//     padding: theme.spacing(0, 2)
+//   }
+// }));
+
 function NavigationIcons() {
   const classes = useStyles();
+  // const badgeClasses = useBadgeStyles();
   const [value, setValue] = React.useState("home");
 
   function handleChange(event, newValue) {
@@ -49,7 +60,6 @@ function NavigationIcons() {
         icon={<HomeIcon fontSize="large" />}
         key="0"
       />
-
       <BottomNavigationAction
         component={Link}
         to="/bookmarks"
@@ -59,12 +69,12 @@ function NavigationIcons() {
         key="1"
       />
 
-      <BottomNavigationAction
+      {/* <BottomNavigationAction
         label="Categories"
         value="categories"
         icon={<AppsIcon fontSize="large" />}
         key="2"
-      />
+      /> */}
 
       {/*  <BottomNavigationAction
         label="Settings"

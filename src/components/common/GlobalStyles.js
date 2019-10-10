@@ -8,6 +8,7 @@ export default createGlobalStyle`
   body {
     margin: 0;
     background-color: #F9F6F2;
+    /* overflow: hidden; */
     /* background-color: white; */
   }
 
