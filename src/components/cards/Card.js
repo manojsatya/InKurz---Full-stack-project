@@ -5,7 +5,7 @@ import BookmarkIcon from "@material-ui/icons/Bookmark";
 import Comments from "./Comments";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import { getComments } from "./servicesComment";
+import { getComments, deleteComment } from "./servicesComment";
 
 Card.propTypes = {
   title: PropTypes.string,
@@ -25,7 +25,8 @@ export default function Card({
   publishedAt,
   onBookmarkClick,
   isBookmarked,
-  onCommentSubmit
+  onCommentSubmit,
+  onDeleteComment
 }) {
   const moment = require("moment");
   const diffTime = moment(publishedAt).fromNow();
@@ -49,6 +50,13 @@ export default function Card({
     setisCommentsVisible(!isCommentsVisible);
   }
 
+  function handleDeleteComment(cardId, comment) {
+    // console.log("inside handledeletecomment");
+    // console.log(cardId);
+    // console.log(comment._id);
+    deleteComment(cardId, comment);
+  }
+
   function handleCommentSubmit(event) {
     event.preventDefault();
     const form = event.target;
@@ -56,6 +64,7 @@ export default function Card({
     const data = Object.fromEntries(formData);
     onCommentSubmit(_id, data).then(card => setCommentsList(card.comments));
     form.reset();
+    setCommentLength("");
     form.comment.focus();
   }
 
@@ -135,7 +144,12 @@ export default function Card({
           </p>
           {chooseBookmark()}
         </BelowContent>
-        <Comments comments={commentsList} showComments={isCommentsVisible} />
+        <Comments
+          comments={commentsList}
+          showComments={isCommentsVisible}
+          id={_id}
+          handleDelete={handleDeleteComment}
+        />
         {inputComment()}
       </ContentStyled>
 
@@ -154,6 +168,7 @@ const CardStyled = styled.section`
   font-family: "Times New Roman", Times, serif;
   p {
     line-height: 1.3;
+    font-size: 1.2rem;
   }
   h3 {
     margin: 0;

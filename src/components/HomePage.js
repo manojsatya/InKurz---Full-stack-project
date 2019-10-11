@@ -8,6 +8,7 @@ export default function Homepage({ cards, onBookmarkClick }) {
   function onCommentSubmit(id, data) {
     return postComment(id, data);
   }
+
   return (
     <HomepageStyled>
       <Title />

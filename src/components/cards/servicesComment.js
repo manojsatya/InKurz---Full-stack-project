@@ -12,6 +12,10 @@ export function postComment(id, data) {
   return fetchComments({ method: "POST", id, data });
 }
 
+export function deleteComment(id, data) {
+  return fetchComments({ method: "DELETE", id, data });
+}
+
 function fetchComments({ method = "GET", id = "", data } = {}) {
   return fetch("/news/" + id, {
     method,

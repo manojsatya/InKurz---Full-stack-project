@@ -1,7 +1,11 @@
 const mongoose = require("mongoose");
 
 const commentSchema = mongoose.Schema({
-  comment: String
+  comment: String,
+  commentedAt: {
+    type: Date,
+    default: Date.now
+  }
 });
 
 const Card = mongoose.model("Card", {

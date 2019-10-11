@@ -20,4 +20,26 @@ router.post("/:id", (req, res) => {
     .catch(err => res.json(err));
 });
 
+router.delete("/:id/comments/", (req, res) => {
+  const id = req.body;
+
+  // console.log(id._id);
+  Card.findById(req.params.id).then(card => {
+    // const list = card.comments.filter(comment => {
+    //   console.log("***");
+    //   console.log(comment._id);
+    //   console.log(id._id);
+    //   console.log("***");
+    //   return comment._id !== id._id;
+    // });
+    const index = card.comments
+      .map(comment => {
+        return comment._id;
+      })
+      .indexOf(id._id);
+    card.comments.splice(index, 1);
+    console.log(card.comments);
+  });
+});
+
 module.exports = router;
