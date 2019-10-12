@@ -25,8 +25,7 @@ export default function Card({
   publishedAt,
   onBookmarkClick,
   isBookmarked,
-  onCommentSubmit,
-  onDeleteComment
+  onCommentSubmit
 }) {
   const moment = require("moment");
   const diffTime = moment(publishedAt).fromNow();
@@ -50,11 +49,10 @@ export default function Card({
     setisCommentsVisible(!isCommentsVisible);
   }
 
-  function handleDeleteComment(cardId, comment) {
-    // console.log("inside handledeletecomment");
-    // console.log(cardId);
-    // console.log(comment._id);
-    deleteComment(cardId, comment);
+  function handleDeleteComment(cardId, commentData) {
+    deleteComment(cardId, commentData).then(card =>
+      setCommentsList(card.comments)
+    );
   }
 
   function handleCommentSubmit(event) {

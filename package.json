@@ -24,7 +24,7 @@
     "styled-icons": "^8.4.2"
   },
   "scripts": {
-    "start": "run-p server dev scheduler",
+    "start": "run-p server dev",
     "server": "nodemon src/server/server.js",
     "dev": "react-scripts start",
     "scheduler": "nodemon src/server/routes/newsAPIRoute.js",

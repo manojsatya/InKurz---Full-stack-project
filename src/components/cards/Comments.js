@@ -3,9 +3,7 @@ import React from "react";
 import styled from "styled-components/macro";
 
 export default function Comments({ id, showComments, comments, handleDelete }) {
-  // console.log(showComments);
   function handleDeleteClick(id, deleteComment) {
-    // console.log(id, deleteComment);
     handleDelete(id, deleteComment);
   }
 

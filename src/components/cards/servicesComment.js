@@ -13,7 +13,13 @@ export function postComment(id, data) {
 }
 
 export function deleteComment(id, data) {
-  return fetchComments({ method: "DELETE", id, data });
+  return fetch("/news/" + id + "/comments/" + data._id, {
+    method: "DELETE",
+    body: JSON.stringify(data),
+    headers: {
+      "content-type": "application/json"
+    }
+  }).then(res => res.json());
 }
 
 function fetchComments({ method = "GET", id = "", data } = {}) {
