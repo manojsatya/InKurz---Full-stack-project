@@ -4,9 +4,9 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components/macro";
 import { Home } from "styled-icons/boxicons-solid/Home";
 import { Bookmark } from "styled-icons/boxicons-solid/Bookmark";
+import { Settings } from "styled-icons/material/Settings";
 import Badge from "@material-ui/core/Badge";
 
-// import { PlusCircle } from "styled-icons/boxicons-solid/PlusCircle";
 const useStyles = makeStyles(theme => ({
   root: {
     width: "100%",
@@ -23,7 +23,6 @@ const useStyles = makeStyles(theme => ({
 }));
 export default function Navigation({ bookmarkCount }) {
   const classes = useStyles();
-  //   console.log({ bookmarkCount });
   return (
     <NavigationStyled className={classes.root}>
       <LinkStyled exact to="/">
@@ -37,6 +36,9 @@ export default function Navigation({ bookmarkCount }) {
         >
           <BookmarkStyled />
         </Badge>
+      </LinkStyled>
+      <LinkStyled exact to="/settings">
+        <SettingsStyled />
       </LinkStyled>
     </NavigationStyled>
   );
@@ -64,6 +66,6 @@ const HomeStyled = styled(Home)`
 const BookmarkStyled = styled(Bookmark)`
   width: 35px;
 `;
-// const PlusCircleStyled = styled(PlusCircle)`
-// width: 28px;
-// `
+const SettingsStyled = styled(Settings)`
+  width: 35px;
+`;

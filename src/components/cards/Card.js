@@ -5,15 +5,17 @@ import BookmarkIcon from "@material-ui/icons/Bookmark";
 import Comments from "./Comments";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import { getComments, deleteComment } from "./servicesComment";
+import { getComments, deleteComment, patchComment } from "./servicesComment";
 
 Card.propTypes = {
+  _id: PropTypes.string,
   title: PropTypes.string,
   urlToImage: PropTypes.string,
   description: PropTypes.string,
   publishedAt: PropTypes.string,
   onBookmarkClick: PropTypes.func,
-  isBookmarked: PropTypes.bool
+  isBookmarked: PropTypes.bool,
+  onCommentSubmit: PropTypes.func
 };
 
 export default function Card({
@@ -51,6 +53,12 @@ export default function Card({
 
   function handleDeleteComment(cardId, commentData) {
     deleteComment(cardId, commentData).then(card =>
+      setCommentsList(card.comments)
+    );
+  }
+
+  function handleEditComment(cardId, commentData) {
+    patchComment(cardId, commentData).then(card =>
       setCommentsList(card.comments)
     );
   }
@@ -96,8 +104,6 @@ export default function Card({
             backgroundColor: "brown",
             borderRadius: "50%",
             color: "white"
-            // animationDelay: "2s"
-            // transitionDelay: "all 30s"
           }}
         />
       </ButtonStyled>
@@ -115,6 +121,7 @@ export default function Card({
             name="comment"
             onChange={event => setCommentLength(event.target.value)}
             active={commentLength}
+            value={commentLength}
           />
           {commentLength.length >= 1 && showButton()}
         </form>
@@ -147,6 +154,7 @@ export default function Card({
           showComments={isCommentsVisible}
           id={_id}
           handleDelete={handleDeleteComment}
+          handleEdit={handleEditComment}
         />
         {inputComment()}
       </ContentStyled>
