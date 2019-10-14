@@ -5,15 +5,17 @@ import BookmarkIcon from "@material-ui/icons/Bookmark";
 import Comments from "./Comments";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
-import { getComments, deleteComment } from "./servicesComment";
+import { getComments, deleteComment, patchComment } from "./servicesComment";
 
 Card.propTypes = {
+  _id: PropTypes.string,
   title: PropTypes.string,
   urlToImage: PropTypes.string,
   description: PropTypes.string,
   publishedAt: PropTypes.string,
   onBookmarkClick: PropTypes.func,
-  isBookmarked: PropTypes.bool
+  isBookmarked: PropTypes.bool,
+  onCommentSubmit: PropTypes.func
 };
 
 export default function Card({
@@ -25,15 +27,14 @@ export default function Card({
   publishedAt,
   onBookmarkClick,
   isBookmarked,
-  onCommentSubmit,
-  onDeleteComment
+  onCommentSubmit
 }) {
   const moment = require("moment");
   const diffTime = moment(publishedAt).fromNow();
 
   const [msg, setMsg] = useState("");
   const [isCommentsVisible, setisCommentsVisible] = useState(false);
-  const [commentLength, setCommentLength] = useState("");
+  const [comment, setComment] = useState("");
   const [commentsList, setCommentsList] = useState([]);
 
   useEffect(() => {
@@ -50,11 +51,16 @@ export default function Card({
     setisCommentsVisible(!isCommentsVisible);
   }
 
-  function handleDeleteComment(cardId, comment) {
-    // console.log("inside handledeletecomment");
-    // console.log(cardId);
-    // console.log(comment._id);
-    deleteComment(cardId, comment);
+  function handleDeleteComment(cardId, commentData) {
+    deleteComment(cardId, commentData).then(card =>
+      setCommentsList(card.comments)
+    );
+  }
+
+  function handleEditComment(cardId, commentData) {
+    patchComment(cardId, commentData).then(card =>
+      setCommentsList(card.comments)
+    );
   }
 
   function handleCommentSubmit(event) {
@@ -64,7 +70,7 @@ export default function Card({
     const data = Object.fromEntries(formData);
     onCommentSubmit(_id, data).then(card => setCommentsList(card.comments));
     form.reset();
-    setCommentLength("");
+    setComment("");
     form.comment.focus();
   }
 
@@ -98,8 +104,6 @@ export default function Card({
             backgroundColor: "brown",
             borderRadius: "50%",
             color: "white"
-            // animationDelay: "2s"
-            // transitionDelay: "all 30s"
           }}
         />
       </ButtonStyled>
@@ -115,10 +119,11 @@ export default function Card({
             placeholder="Add a comment..."
             autoComplete="off"
             name="comment"
-            onChange={event => setCommentLength(event.target.value)}
-            active={commentLength}
+            onChange={event => setComment(event.target.value)}
+            active={comment}
+            value={comment}
           />
-          {commentLength.length >= 1 && showButton()}
+          {comment.length >= 1 && showButton()}
         </form>
       </FormSection>
     );
@@ -149,6 +154,7 @@ export default function Card({
           showComments={isCommentsVisible}
           id={_id}
           handleDelete={handleDeleteComment}
+          handleEdit={handleEditComment}
         />
         {inputComment()}
       </ContentStyled>

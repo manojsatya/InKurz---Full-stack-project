@@ -1,12 +1,74 @@
-import React from "react";
-// import AccountCircleIcon from "@material-ui/icons/AccountCircle";
+import React, { useState } from "react";
 import styled from "styled-components/macro";
+import Dialog from "@material-ui/core/Dialog";
+import DialogContent from "@material-ui/core/DialogContent";
+import DialogTitle from "@material-ui/core/DialogTitle";
 
-export default function Comments({ id, showComments, comments, handleDelete }) {
-  // console.log(showComments);
+export default function Comments({
+  id,
+  showComments,
+  comments,
+  handleDelete,
+  handleEdit
+}) {
+  const [editFormDialog, setEditFormDialog] = useState(false);
+  const [editComment, setEditComment] = useState("");
+  const [cardID, setCardID] = useState("");
+  const [commentID, setCommentID] = useState("");
+
   function handleDeleteClick(id, deleteComment) {
-    // console.log(id, deleteComment);
     handleDelete(id, deleteComment);
+  }
+
+  function handleEditClick(id, commentData) {
+    setCommentID(commentData._id);
+    setEditComment(commentData.comment);
+    setCardID(id);
+    setEditFormDialog(true);
+  }
+
+  function handleEditCommentSubmit(event) {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+    data._id = commentID;
+    handleEdit(cardID, data);
+  }
+
+  function handleClose() {
+    setEditFormDialog(false);
+  }
+
+  function editForm() {
+    return (
+      <Dialog
+        open={editFormDialog}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">Edit Comment</DialogTitle>
+        <DialogContent>
+          <form onSubmit={handleEditCommentSubmit}>
+            <textarea
+              name="comment"
+              value={editComment}
+              rows="12"
+              cols="80vw"
+              onChange={event => setEditComment(event.target.value)}
+            ></textarea>
+            <div style={{ display: "flex", justifyContent: "space-between" }}>
+              <button onClick={handleClose} color="primary">
+                Cancel
+              </button>
+              <button onClick={handleClose} color="primary" type="submit">
+                Submit
+              </button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
+    );
   }
 
   return (
@@ -19,7 +81,12 @@ export default function Comments({ id, showComments, comments, handleDelete }) {
               <p>{item.comment}</p>
             </CommentsStyled>
             <EditDeleteStyled>
-              <EditButtonStyled>edit</EditButtonStyled>
+              <div>
+                <EditButtonStyled onClick={() => handleEditClick(id, item)}>
+                  edit
+                </EditButtonStyled>
+                {editForm()}
+              </div>
               <DeleteButtonStyled onClick={() => handleDeleteClick(id, item)}>
                 delete
               </DeleteButtonStyled>
@@ -83,6 +150,7 @@ const EditButtonStyled = styled.button`
   border-radius: 0 0 0 0.5rem;
   text-decoration: underline;
   color: brown;
+  outline: none;
 `;
 
 const DeleteButtonStyled = styled.button`

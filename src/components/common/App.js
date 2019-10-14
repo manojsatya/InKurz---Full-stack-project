@@ -8,7 +8,6 @@ import NavigationNew from "./NavigationNew";
 
 export default function App() {
   const [cards, setCards] = useState([]);
-  // const [bookmarkCount, setBookmarkCount] = useState(0)
   useEffect(() => {
     getCards().then(setCards);
   }, []);
@@ -28,11 +27,8 @@ export default function App() {
 
   function bookmarkCount() {
     const bookmarkCountNum = cards.filter(card => card.isBookmarked).length;
-    // console.log(bookmarkCountNum);
     return bookmarkCountNum;
   }
-
-  // bookmarkCount();
 
   return (
     <Router>
@@ -55,8 +51,6 @@ export default function App() {
             )}
           />
         </Switch>
-        {/* <HomePage cards={cards} onBookmarkClick={handleBookmarkClick} /> */}
-        {/* <Navigation /> */}
         <NavigationNew bookmarkCount={bookmarkCount()} />
       </AppStyled>
     </Router>
