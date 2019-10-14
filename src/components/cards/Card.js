@@ -34,7 +34,7 @@ export default function Card({
 
   const [msg, setMsg] = useState("");
   const [isCommentsVisible, setisCommentsVisible] = useState(false);
-  const [commentLength, setCommentLength] = useState("");
+  const [comment, setComment] = useState("");
   const [commentsList, setCommentsList] = useState([]);
 
   useEffect(() => {
@@ -70,7 +70,7 @@ export default function Card({
     const data = Object.fromEntries(formData);
     onCommentSubmit(_id, data).then(card => setCommentsList(card.comments));
     form.reset();
-    setCommentLength("");
+    setComment("");
     form.comment.focus();
   }
 
@@ -119,11 +119,11 @@ export default function Card({
             placeholder="Add a comment..."
             autoComplete="off"
             name="comment"
-            onChange={event => setCommentLength(event.target.value)}
-            active={commentLength}
-            value={commentLength}
+            onChange={event => setComment(event.target.value)}
+            active={comment}
+            value={comment}
           />
-          {commentLength.length >= 1 && showButton()}
+          {comment.length >= 1 && showButton()}
         </form>
       </FormSection>
     );

@@ -15,20 +15,21 @@ router.post("/:id", (req, res) => {
     .then(card => {
       const newComment = card.comments.create(req.body);
       card.comments.push(newComment);
-      card.save().then(res.json(card));
+      card.save().then(() => res.json(card));
     })
     .catch(err => res.json(err));
 });
 
 router.patch("/:id/comments/:comment_id", (req, res) => {
-  Card.findByIdAndUpdate(req.params.id).then(card => {
-    const editedComment = card.comments.filter(comment => {
-      return comment._id.toString() === req.params.comment_id;
-    });
-    editedComment[0].comment = req.body.comment;
-    console.log(editedComment);
-    card.save().then(res.json(card));
-  });
+  Card.findByIdAndUpdate(req.params.id)
+    .then(card => {
+      const editedComment = card.comments.filter(comment => {
+        return comment._id.toString() === req.params.comment_id;
+      });
+      editedComment[0].comment = req.body.comment;
+      card.save().then(() => res.json(card));
+    })
+    .catch(err => res.json(err));
 });
 
 router.delete("/:id/comments/:comment_id", (req, res) => {
@@ -38,7 +39,7 @@ router.delete("/:id/comments/:comment_id", (req, res) => {
         comment => comment._id.toString() !== req.params.comment_id
       );
       card.comments = list;
-      card.save().then(res.json(card));
+      card.save().then(() => res.json(card));
     })
     .catch(err => res.json(err));
 });
