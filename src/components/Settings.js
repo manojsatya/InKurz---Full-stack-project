@@ -21,7 +21,7 @@ export default function Settings({ firstPart, secondPart }) {
 
 // }
 
-const WrapperStyled = styled.h3`
+const WrapperStyled = styled.div`
   text-align: center;
   margin: 100px auto 10px auto;
   background-color: white;

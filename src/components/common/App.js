@@ -7,7 +7,7 @@ import { getCards, patchCard } from "../cards/servicesCard";
 import NavigationNew from "./NavigationNew";
 import Settings from "../Settings";
 import Feedback from "../Feedback";
-import Reviews from "../reviews/Reviews";
+import Reviews from "../reviews/ReviewsPage";
 
 export default function App() {
   const [cards, setCards] = useState([]);

@@ -5,6 +5,7 @@ import Title from "./common/Title";
 import Rating from "@material-ui/lab/Rating";
 import { postReview } from "./reviews/servicesReview";
 import { NavLink } from "react-router-dom";
+import { LeftArrowCircle } from "styled-icons/boxicons-solid/LeftArrowCircle";
 
 export default function Feedback({ firstPart, secondPart }) {
   const [review, setReview] = useState("");
@@ -23,8 +24,11 @@ export default function Feedback({ firstPart, secondPart }) {
 
   return (
     <WrapperStyled>
+      <NavLink to="/settings">
+        <LeftArrowStyled />
+      </NavLink>
       <Title firstPart={firstPart} secondPart={secondPart} />
-      <p> Please give us feedback</p>
+      <Pstyled> Please give us feedback</Pstyled>
       <form onSubmit={handleReviewSubmit}>
         <TextareaStyled
           autoFocus
@@ -37,7 +41,7 @@ export default function Feedback({ firstPart, secondPart }) {
         ></TextareaStyled>
         <CharStyled>{review.length}/250 characters remaining</CharStyled>
 
-        <p>Please give us a rating</p>
+        <Pstyled>Please give us a rating</Pstyled>
         <Rating
           name="rating"
           value={value}
@@ -56,12 +60,15 @@ export default function Feedback({ firstPart, secondPart }) {
 
 // }
 
-const WrapperStyled = styled.h3`
+const WrapperStyled = styled.div`
   text-align: center;
 `;
 
+const Pstyled = styled.p`
+  font-size: 1.2rem;
+`;
 const TextareaStyled = styled.textarea`
-  margin-top: 20px;
+  margin-top: 15px;
   box-shadow: 0px 6px 20px grey;
   letter-spacing: 1px;
   line-height: 1.5;
@@ -80,14 +87,24 @@ const CharStyled = styled.p`
   padding: 0;
   margin: 0;
   left: 0;
-  font-family: Arial, Helvetica, sans-serif;
+  /* font-family: Helvetica, sans-serif; */
   font-style: italic;
   font-size: 0.9rem;
   color: brown;
 `;
 
 const NavlinkStyled = styled(NavLink)`
-  color: inherit;
+  color: blue;
   text-decoration: none;
-  font-size: 1.3rem;
+  font-size: 1.2rem;
+  font-style: italic;
+  text-decoration: underline;
+`;
+
+const LeftArrowStyled = styled(LeftArrowCircle)`
+  position: fixed;
+  color: brown;
+  top: 15px;
+  left: 10px;
+  width: 35px;
 `;
