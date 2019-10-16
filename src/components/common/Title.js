@@ -1,10 +1,11 @@
 import React from "react";
 import styled from "styled-components/macro";
 
-export default function Title() {
+export default function Title({ firstPart, secondPart }) {
   return (
     <TitleStyled>
-      In<SpanStyled>Kurz</SpanStyled>
+      {firstPart}
+      <SpanStyled>{secondPart}</SpanStyled>
       <LineStyledTop />
       <LineStyledBottom />
     </TitleStyled>

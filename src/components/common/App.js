@@ -5,6 +5,9 @@ import styled from "styled-components/macro";
 // import Navigation from "./Navigation";
 import { getCards, patchCard } from "../cards/servicesCard";
 import NavigationNew from "./NavigationNew";
+import Settings from "../Settings";
+import Feedback from "../Feedback";
+import Reviews from "../reviews/Reviews";
 
 export default function App() {
   const [cards, setCards] = useState([]);
@@ -38,7 +41,12 @@ export default function App() {
             exact
             path="/"
             render={() => (
-              <HomePage cards={cards} onBookmarkClick={handleBookmarkClick} />
+              <HomePage
+                cards={cards}
+                onBookmarkClick={handleBookmarkClick}
+                firstPart="In"
+                secondPart="Kurz"
+              />
             )}
           />
           <Route
@@ -47,8 +55,22 @@ export default function App() {
               <HomePage
                 cards={cards.filter(card => card.isBookmarked)}
                 onBookmarkClick={handleBookmarkClick}
+                firstPart="Book"
+                secondPart="marks"
               />
             )}
+          />
+          <Route
+            path="/settings"
+            render={() => <Settings firstPart="Set" secondPart="tings" />}
+          />
+          <Route
+            path="/feedback"
+            render={() => <Feedback firstPart="Feed" secondPart="back" />}
+          />
+          <Route
+            path="/reviews"
+            render={() => <Reviews firstPart="Re" secondPart="views" />}
           />
         </Switch>
         <NavigationNew bookmarkCount={bookmarkCount()} />
