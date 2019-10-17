@@ -45,7 +45,7 @@ export default function Card({
 
   useEffect(() => {
     getComments(_id).then(setCommentsList);
-  }, []);
+  }, [_id]);
 
   function toggleComments() {
     setisCommentsVisible(!isCommentsVisible);
