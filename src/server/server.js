@@ -19,3 +19,4 @@ server.set("json spaces", 2);
 // server.use("/newsAPI", require("./routes/newsAPIRoute"));
 server.use("/news", require("./routes/cards"));
 server.use("/news", require("./routes/comments"));
+server.use("/reviews", require("./routes/reviews"));
