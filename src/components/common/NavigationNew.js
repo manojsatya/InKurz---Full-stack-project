@@ -4,6 +4,7 @@ import { NavLink } from "react-router-dom";
 import styled from "styled-components/macro";
 import { Home } from "styled-icons/boxicons-solid/Home";
 import { Bookmark } from "styled-icons/boxicons-solid/Bookmark";
+import { Grid } from "styled-icons/boxicons-solid/Grid";
 import { Settings } from "styled-icons/material/Settings";
 import Badge from "@material-ui/core/Badge";
 
@@ -37,6 +38,9 @@ export default function Navigation({ bookmarkCount }) {
           <BookmarkStyled />
         </Badge>
       </LinkStyled>
+      <LinkStyled exact to="/categories">
+        <GridStyled />
+      </LinkStyled>
       <LinkStyled exact to="/settings">
         <SettingsStyled />
       </LinkStyled>
@@ -64,6 +68,10 @@ const HomeStyled = styled(Home)`
   width: 35px;
 `;
 const BookmarkStyled = styled(Bookmark)`
+  width: 35px;
+`;
+
+const GridStyled = styled(Grid)`
   width: 35px;
 `;
 const SettingsStyled = styled(Settings)`
