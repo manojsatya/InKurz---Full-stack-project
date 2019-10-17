@@ -67,13 +67,76 @@ export default function Category({ firstPart, secondPart }) {
       </GridContainerStyed>
     );
   }
+
+  function CountryGrid() {
+    return (
+      <GridContainerStyed>
+        <CategoryStyled>
+          <a href="/us">
+            <img
+              src="https://res.cloudinary.com/dwagc225r/image/upload/v1571322188/NewsDB/us_ypvofb.jpg"
+              alt="us"
+            />
+            <span>United States</span>
+          </a>
+        </CategoryStyled>
+        <CategoryStyled>
+          <a href="/uk">
+            <img
+              src="https://res.cloudinary.com/dwagc225r/image/upload/v1571322192/NewsDB/uk_ai1dsh.jpg"
+              alt="uk"
+            />
+            <span>United Kingdom</span>
+          </a>
+        </CategoryStyled>
+
+        <CategoryStyled>
+          <a href="/france">
+            <img
+              src="https://res.cloudinary.com/dwagc225r/image/upload/v1571322196/NewsDB/france_nr55wf.jpg"
+              alt="france"
+            />
+            <span>France</span>
+          </a>
+        </CategoryStyled>
+        <CategoryStyled>
+          <a href="/india">
+            <img
+              src="https://res.cloudinary.com/dwagc225r/image/upload/v1571322195/NewsDB/india_u8kkid.jpg"
+              alt="india"
+            />
+            <span>India</span>
+          </a>
+        </CategoryStyled>
+        <CategoryStyled>
+          <a href="/australia">
+            <img
+              src="https://res.cloudinary.com/dwagc225r/image/upload/v1571322191/NewsDB/australia_xkbkhp.jpg"
+              alt="australia"
+            />
+            <span>Australia</span>
+          </a>
+        </CategoryStyled>
+
+        <CategoryStyled>
+          <a href="/italy">
+            <img
+              src="https://res.cloudinary.com/dwagc225r/image/upload/v1571322190/NewsDB/italy_golpzq.jpg"
+              alt="italy"
+            />
+            <span>Italy</span>
+          </a>
+        </CategoryStyled>
+      </GridContainerStyed>
+    );
+  }
   return (
     <div>
       <Title firstPart={firstPart} secondPart={secondPart} />
       <StyledH2>Select by topic</StyledH2>
       <CategoryGrid />
       <StyledH2>Select by country:</StyledH2>
-      <CategoryGrid />
+      <CountryGrid />
     </div>
   );
 }

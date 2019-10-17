@@ -50,7 +50,7 @@ export default function App() {
             path="/"
             render={() => (
               <HomePage
-                cards={cards}
+                cards={cards.filter(card => card.country === "de")}
                 onBookmarkClick={handleBookmarkClick}
                 firstPart="In"
                 secondPart="Kurz"
@@ -131,6 +131,72 @@ export default function App() {
                 onBookmarkClick={handleBookmarkClick}
                 firstPart="Spo"
                 secondPart="rts"
+              />
+            )}
+          />
+          <Route
+            path="/us"
+            render={() => (
+              <HomePage
+                cards={cards.filter(card => card.country === "us")}
+                onBookmarkClick={handleBookmarkClick}
+                firstPart="United"
+                secondPart="States"
+              />
+            )}
+          />
+          <Route
+            path="/uk"
+            render={() => (
+              <HomePage
+                cards={cards.filter(card => card.country === "gb")}
+                onBookmarkClick={handleBookmarkClick}
+                firstPart="United"
+                secondPart="Kingdom"
+              />
+            )}
+          />
+          <Route
+            path="/france"
+            render={() => (
+              <HomePage
+                cards={cards.filter(card => card.country === "fr")}
+                onBookmarkClick={handleBookmarkClick}
+                firstPart="Fran"
+                secondPart="ce"
+              />
+            )}
+          />
+          <Route
+            path="/india"
+            render={() => (
+              <HomePage
+                cards={cards.filter(card => card.country === "in")}
+                onBookmarkClick={handleBookmarkClick}
+                firstPart="Ind"
+                secondPart="ia"
+              />
+            )}
+          />
+          <Route
+            path="/australia"
+            render={() => (
+              <HomePage
+                cards={cards.filter(card => card.country === "au")}
+                onBookmarkClick={handleBookmarkClick}
+                firstPart="Austr"
+                secondPart="alia"
+              />
+            )}
+          />
+          <Route
+            path="/italy"
+            render={() => (
+              <HomePage
+                cards={cards.filter(card => card.country === "it")}
+                onBookmarkClick={handleBookmarkClick}
+                firstPart="Ita"
+                secondPart="ly"
               />
             )}
           />

@@ -3,12 +3,12 @@ const fetch = require("node-fetch");
 // var schedule = require("node-schedule");
 // var rule = new schedule.RecurrenceRule();
 // rule.minute = 20;
-const country = "de";
-const category = "sports";
+const country = "in";
+const category = "";
 
 function getArticles() {
   return fetch(
-    `https://newsapi.org/v2/top-headlines?country=de&apiKey=020b3817a9ee4c8387dd3bcfac3eb12e&category=sports`
+    `https://newsapi.org/v2/top-headlines?country=in&apiKey=020b3817a9ee4c8387dd3bcfac3eb12e`
   )
     .then(res => res.json())
     .then(result => {
