@@ -8,11 +8,19 @@ import NavigationNew from "./NavigationNew";
 import Settings from "../Settings";
 import Feedback from "../Feedback";
 import Reviews from "../reviews/ReviewsPage";
+import Category from "../Category";
 
 export default function App() {
   const [cards, setCards] = useState([]);
   useEffect(() => {
-    getCards().then(setCards);
+    getCards().then(cards => {
+      cards.sort((a, b) => {
+        const dateA = new Date(a.publishedAt);
+        const dateB = new Date(b.publishedAt);
+        return dateB - dateA;
+      });
+      setCards(cards);
+    });
   }, []);
 
   function handleBookmarkClick(card) {
@@ -42,7 +50,7 @@ export default function App() {
             path="/"
             render={() => (
               <HomePage
-                cards={cards}
+                cards={cards.filter(card => card.country === "de")}
                 onBookmarkClick={handleBookmarkClick}
                 firstPart="In"
                 secondPart="Kurz"
@@ -59,6 +67,142 @@ export default function App() {
                 secondPart="marks"
               />
             )}
+          />
+          <Route
+            path="/business"
+            render={() => (
+              <HomePage
+                cards={cards.filter(card => card.category === "business")}
+                onBookmarkClick={handleBookmarkClick}
+                firstPart="Busi"
+                secondPart="ness"
+              />
+            )}
+          />
+          <Route
+            path="/entertainment"
+            render={() => (
+              <HomePage
+                cards={cards.filter(card => card.category === "entertainment")}
+                onBookmarkClick={handleBookmarkClick}
+                firstPart="Enter"
+                secondPart="tainment"
+              />
+            )}
+          />
+          <Route
+            path="/health"
+            render={() => (
+              <HomePage
+                cards={cards.filter(card => card.category === "health")}
+                onBookmarkClick={handleBookmarkClick}
+                firstPart="Hea"
+                secondPart="lth"
+              />
+            )}
+          />
+          <Route
+            path="/science"
+            render={() => (
+              <HomePage
+                cards={cards.filter(card => card.category === "science")}
+                onBookmarkClick={handleBookmarkClick}
+                firstPart="Sci"
+                secondPart="ence"
+              />
+            )}
+          />
+          <Route
+            path="/technology"
+            render={() => (
+              <HomePage
+                cards={cards.filter(card => card.category === "technology")}
+                onBookmarkClick={handleBookmarkClick}
+                firstPart="Tech"
+                secondPart="nology"
+              />
+            )}
+          />
+          <Route
+            path="/sports"
+            render={() => (
+              <HomePage
+                cards={cards.filter(card => card.category === "sports")}
+                onBookmarkClick={handleBookmarkClick}
+                firstPart="Spo"
+                secondPart="rts"
+              />
+            )}
+          />
+          <Route
+            path="/us"
+            render={() => (
+              <HomePage
+                cards={cards.filter(card => card.country === "us")}
+                onBookmarkClick={handleBookmarkClick}
+                firstPart="United"
+                secondPart="States"
+              />
+            )}
+          />
+          <Route
+            path="/uk"
+            render={() => (
+              <HomePage
+                cards={cards.filter(card => card.country === "gb")}
+                onBookmarkClick={handleBookmarkClick}
+                firstPart="United"
+                secondPart="Kingdom"
+              />
+            )}
+          />
+          <Route
+            path="/france"
+            render={() => (
+              <HomePage
+                cards={cards.filter(card => card.country === "fr")}
+                onBookmarkClick={handleBookmarkClick}
+                firstPart="Fran"
+                secondPart="ce"
+              />
+            )}
+          />
+          <Route
+            path="/india"
+            render={() => (
+              <HomePage
+                cards={cards.filter(card => card.country === "in")}
+                onBookmarkClick={handleBookmarkClick}
+                firstPart="Ind"
+                secondPart="ia"
+              />
+            )}
+          />
+          <Route
+            path="/australia"
+            render={() => (
+              <HomePage
+                cards={cards.filter(card => card.country === "au")}
+                onBookmarkClick={handleBookmarkClick}
+                firstPart="Austr"
+                secondPart="alia"
+              />
+            )}
+          />
+          <Route
+            path="/italy"
+            render={() => (
+              <HomePage
+                cards={cards.filter(card => card.country === "it")}
+                onBookmarkClick={handleBookmarkClick}
+                firstPart="Ita"
+                secondPart="ly"
+              />
+            )}
+          />
+          <Route
+            path="/categories"
+            render={() => <Category firstPart="Cate" secondPart="gory" />}
           />
           <Route
             path="/settings"

@@ -16,6 +16,8 @@ const Card = mongoose.model("Card", {
   description: String,
   content: String,
   isBookmarked: Boolean,
+  category: String,
+  country: String,
   comments: [commentSchema]
 });
 
