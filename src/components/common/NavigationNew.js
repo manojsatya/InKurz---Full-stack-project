@@ -7,25 +7,22 @@ import { Bookmark } from "styled-icons/boxicons-solid/Bookmark";
 import { Grid } from "styled-icons/boxicons-solid/Grid";
 import { Settings } from "styled-icons/material/Settings";
 import Badge from "@material-ui/core/Badge";
+// import { ThemeProvider } from "styled-components";
 
 const useStyles = makeStyles(theme => ({
-  root: {
-    width: "100%",
-    position: "fixed",
-    backgroundColor: "#F9F6F2",
-    bottom: 0
-  },
+  // root: {
+  //   backgroundColor: `${
+  //     theme.mode === "dark" ? "#111" : "var(--inkurz-bg-color)"
+  //   }`
+  // },
   margin: {
     margin: theme.spacing(2)
-  },
-  padding: {
-    padding: theme.spacing(0, 2)
   }
 }));
 export default function Navigation({ bookmarkCount }) {
   const classes = useStyles();
   return (
-    <NavigationStyled className={classes.root}>
+    <NavigationStyled>
       <LinkStyled exact to="/">
         <HomeStyled />
       </LinkStyled>
@@ -59,9 +56,15 @@ const LinkStyled = styled(NavLink)`
 `;
 
 const NavigationStyled = styled.nav`
+  position: fixed;
   display: grid;
   grid-auto-flow: column;
   gap: 1px;
+  width: 100%;
+  /* background-color: "#F9F6F2"; */
+  background-color: ${props =>
+    props.theme.mode === "dark" ? "#111" : "#F9F6F2"};
+  bottom: 0;
 `;
 
 const HomeStyled = styled(Home)`
