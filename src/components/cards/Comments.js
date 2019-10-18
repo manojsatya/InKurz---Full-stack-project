@@ -101,8 +101,9 @@ export default function Comments({
 const CommentsSectionStyled = styled.section`
   max-height: 0;
   overflow: hidden;
-  margin: 0;
-  background: whitesmoke;
+  margin: 2px;
+  /* background-color: ${props =>
+    props.theme.mode === "dark" ? "white" : "wheat"}; */
   border-radius: 1rem;
   transition: all 0.5s ease;
 
@@ -115,15 +116,18 @@ const CommentsSectionStyled = styled.section`
 const CommentsStyled = styled.section`
   display: grid;
   grid-template-columns: 1fr 6fr;
-  margin: 0px;
+  margin: 2px;
   padding: 3px;
   font-size: 1.1rem;
+  /* border-bottom: 1px solid
+    ${props => (props.theme.mode === "dark" ? "brown" : "")}; */
   p {
     width: 100%;
     padding: 10px 5px 5px 10px;
     margin: auto 0;
+    color: ${props => (props.theme.mode === "dark" ? "black" : "black")};
     /* padding-left: 10px; */
-    background: wheat;
+    background: ${props => (props.theme.mode === "dark" ? "white" : "wheat")};
     border-radius: 0.5rem 0.5rem 0 0.5rem;
   }
   img {
@@ -140,13 +144,16 @@ const EditDeleteStyled = styled.div`
   justify-content: flex-end;
   padding-top: 0;
   margin-top: -6px;
-  margin-right: 3px;
+  margin-right: 5px;
+  /* border-bottom: 1px solid
+    ${props => (props.theme.mode === "dark" ? "brown" : "white")}; */
 `;
 
 const EditButtonStyled = styled.button`
-  padding-right: 20px;
+  /* padding-right: 20px; */
   border: 0;
-  background-color: wheat;
+  background-color: ${props =>
+    props.theme.mode === "dark" ? "white" : "wheat"};
   border-radius: 0 0 0 0.5rem;
   text-decoration: underline;
   color: brown;
@@ -156,7 +163,8 @@ const EditButtonStyled = styled.button`
 const DeleteButtonStyled = styled.button`
   padding-right: 20px;
   border: 0;
-  background-color: wheat;
+  background-color: ${props =>
+    props.theme.mode === "dark" ? "white" : "wheat"};
   border-radius: 0 0 0.5rem 0;
   text-decoration: underline;
   color: brown;

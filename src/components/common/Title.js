@@ -24,13 +24,15 @@ const SpanStyled = styled.span`
 `;
 
 const LineStyledTop = styled.hr`
-  border: 1.5px solid black;
+  border: 1.5px solid
+    ${props => (props.theme.mode === "dark" ? "white" : "#111")};
   width: 95%;
   margin: 2px auto 2px;
 `;
 
 const LineStyledBottom = styled.hr`
-  border: 0.5px solid black;
+  border: 0.5px solid
+    ${props => (props.theme.mode === "dark" ? "white" : "#111")};
   width: 85%;
   margin-top: 0px;
 `;
