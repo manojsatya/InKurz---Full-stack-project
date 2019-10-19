@@ -1,5 +1,5 @@
 import React from "react";
-import styled from "styled-components/macro";
+import styled, { keyframes } from "styled-components/macro";
 import Rating from "@material-ui/lab/Rating";
 
 function ShowReviews({ review, rating }) {
@@ -33,7 +33,7 @@ export default function Review({ reviews }) {
     );
   }
   return (
-    <div>
+    <ReviewPageStyled>
       <StarRatingStyled>
         <Bar value={String(calcRating(5) + "%")} />
         <RatingPerStyled>
@@ -75,7 +75,7 @@ export default function Review({ reviews }) {
       {reviews.map(review => (
         <ShowReviews key={review._id} {...review} />
       ))}
-    </div>
+    </ReviewPageStyled>
   );
 }
 
@@ -83,11 +83,12 @@ const ReviewStyled = styled.section`
   position: relative;
   display: flex;
   flex-direction: column;
-  background-color: white;
+  background-color: ${props => (props.theme.mode === "dark" ? "#F9F6F2" : "")};
   padding: 20px;
   margin: 50px 20px 5px 40px;
   border-radius: 0.8rem;
   box-shadow: 0 5px 10px gray;
+  color: black;
 `;
 
 const RatingStyled = styled(Rating)`
@@ -108,7 +109,8 @@ const ImgStyled = styled.img`
   border-radius: 50%;
   top: -40px;
   left: -35px;
-  border: 1px brown solid;
+  border: 1px solid
+    ${props => (props.theme.mode === "dark" ? "#ffb930" : "#721313")};
 `;
 
 const WrapperReview = styled.div`
@@ -127,4 +129,19 @@ const StarRatingStyled = styled.section`
 const RatingPerStyled = styled.div`
   display: flex;
   flex-direction: row;
+`;
+
+const PageTransitionIn = keyframes`
+from {
+    opacity: 0;
+    transform: translateY(100px);
+}
+to{
+    opacity: 1,
+    transform: translateY(0px)
+}
+`;
+
+const ReviewPageStyled = styled.div`
+  animation: ${PageTransitionIn} 0.75s ease-in;
 `;

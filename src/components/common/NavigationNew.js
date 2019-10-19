@@ -51,7 +51,7 @@ const LinkStyled = styled(NavLink)`
   justify-content: center;
 
   &.active {
-    color: brown;
+    color: ${props => (props.theme.mode === "dark" ? "#ffb930" : "#721313")};
   }
 `;
 
@@ -59,12 +59,12 @@ const NavigationStyled = styled.nav`
   position: fixed;
   display: grid;
   grid-auto-flow: column;
-  gap: 1px;
+  /* gap: 1px; */
   width: 100%;
   /* background-color: "#F9F6F2"; */
   background-color: ${props =>
-    props.theme.mode === "dark" ? "#111" : "#F9F6F2"};
-  bottom: 0;
+    props.theme.mode === "dark" ? "black" : "#ffefda"};
+  bottom: -1px;
 `;
 
 const HomeStyled = styled(Home)`

@@ -1,17 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from "../HomePage";
-import styled from "styled-components/macro";
-// import Navigation from "./Navigation";
+import { ThemeProvider } from "styled-components";
 import { getCards, patchCard } from "../cards/servicesCard";
 import NavigationNew from "./NavigationNew";
 import Settings from "../Settings";
 import Feedback from "../Feedback";
 import Reviews from "../reviews/ReviewsPage";
 import Category from "../Category";
+import GlobalStyles from "./GlobalStyles";
 
 export default function App() {
   const [cards, setCards] = useState([]);
+  const [theme, setTheme] = useState({
+    mode: localStorage.getItem("mode")
+  });
   useEffect(() => {
     getCards().then(cards => {
       cards.sort((a, b) => {
@@ -41,9 +44,14 @@ export default function App() {
     return bookmarkCountNum;
   }
 
+  function handleDarkModeClick() {
+    setTheme({ mode: localStorage.getItem("mode") });
+  }
+
   return (
-    <Router>
-      <AppStyled>
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <Router>
         <Switch>
           <Route
             exact
@@ -206,7 +214,13 @@ export default function App() {
           />
           <Route
             path="/settings"
-            render={() => <Settings firstPart="Set" secondPart="tings" />}
+            render={() => (
+              <Settings
+                firstPart="Set"
+                secondPart="tings"
+                onDarkModeClick={handleDarkModeClick}
+              />
+            )}
           />
           <Route
             path="/feedback"
@@ -218,20 +232,7 @@ export default function App() {
           />
         </Switch>
         <NavigationNew bookmarkCount={bookmarkCount()} />
-      </AppStyled>
-    </Router>
+      </Router>
+    </ThemeProvider>
   );
 }
-
-const AppStyled = styled.section`
-  display: grid;
-  grid-template-rows: auto 48px;
-  /* position: fixed; */
-  left: 0;
-  right: 0;
-  top: 0;
-  bottom: 0;
-  /* height: 100%;
-  width: 100%; */
-  font-family: sans-serif;
-`;

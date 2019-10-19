@@ -120,8 +120,9 @@ const CommentsStyled = styled.section`
   padding: 3px;
   font-size: 1.1rem;
   /* border-bottom: 1px solid
-    ${props => (props.theme.mode === "dark" ? "brown" : "")}; */
+  ${props => (props.theme.mode === "dark" ? "brown" : "")}; */
   p {
+    overflow-wrap: break-word;
     width: 100%;
     padding: 10px 5px 5px 10px;
     margin: auto 0;
@@ -156,7 +157,7 @@ const EditButtonStyled = styled.button`
     props.theme.mode === "dark" ? "white" : "wheat"};
   border-radius: 0 0 0 0.5rem;
   text-decoration: underline;
-  color: brown;
+  color: ${props => (props.theme.mode === "dark" ? "#ffb930" : "#721313")};
   outline: none;
 `;
 
@@ -167,6 +168,6 @@ const DeleteButtonStyled = styled.button`
     props.theme.mode === "dark" ? "white" : "wheat"};
   border-radius: 0 0 0.5rem 0;
   text-decoration: underline;
-  color: brown;
+  color: ${props => (props.theme.mode === "dark" ? "#ffb930" : "#721313")};
   outline: none;
 `;
