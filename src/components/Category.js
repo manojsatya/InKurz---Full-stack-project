@@ -1,8 +1,19 @@
 import React from "react";
-import styled from "styled-components/macro";
+import styled, { keyframes } from "styled-components/macro";
 import Title from "./common/Title";
-
-// import sdf from "../../public/"
+import australia from "../assets/icons/australia.jpg";
+import business from "../assets/icons/business.jpg";
+import entertainment from "../assets/icons/entertainment.jpg";
+import france from "../assets/icons/france.jpg";
+import health from "../assets/icons/health.jpg";
+import india from "../assets/icons/india.jpg";
+import italy from "../assets/icons/italy.jpg";
+import science from "../assets/icons/science.jpg";
+import sports from "../assets/icons/sports.jpg";
+import technology from "../assets/icons/technology.jpg";
+import uk from "../assets/icons/uk.jpg";
+import us from "../assets/icons/us.jpg";
+// TODO import all images and replace the links
 
 export default function Category({ firstPart, secondPart }) {
   function CategoryGrid() {
@@ -10,57 +21,39 @@ export default function Category({ firstPart, secondPart }) {
       <GridContainerStyed>
         <CategoryStyled>
           <a href="/business">
-            <img
-              src="https://res.cloudinary.com/dwagc225r/image/upload/v1571306854/NewsDB/business_oaplid.jpg"
-              alt="business"
-            />
+            <img src={business} alt="business" />
             <span>Business</span>
           </a>
         </CategoryStyled>
         <CategoryStyled>
           <a href="/entertainment">
-            <img
-              src="https://res.cloudinary.com/dwagc225r/image/upload/v1571315088/NewsDB/entertainment_a7z8i8.jpg"
-              alt="entertainment"
-            />
+            <img src={entertainment} alt="entertainment" />
             <span>Entertainment</span>
           </a>
         </CategoryStyled>
 
         <CategoryStyled>
           <a href="/health">
-            <img
-              src="https://res.cloudinary.com/dwagc225r/image/upload/v1571315085/NewsDB/health_g3uajo.jpg"
-              alt="health"
-            />
+            <img src={health} alt="health" />
             <span>Health</span>
           </a>
         </CategoryStyled>
         <CategoryStyled>
           <a href="/science">
-            <img
-              src="https://res.cloudinary.com/dwagc225r/image/upload/v1571315085/NewsDB/science_lsksmd.jpg"
-              alt="science"
-            />
+            <img src={science} alt="science" />
             <span>Science</span>
           </a>
         </CategoryStyled>
         <CategoryStyled>
           <a href="/technology">
-            <img
-              src="https://res.cloudinary.com/dwagc225r/image/upload/v1571315084/NewsDB/technology_qavndj.jpg"
-              alt="technology"
-            />
+            <img src={technology} alt="technology" />
             <span>Technology</span>
           </a>
         </CategoryStyled>
 
         <CategoryStyled>
           <a href="/sports">
-            <img
-              src="https://res.cloudinary.com/dwagc225r/image/upload/v1571315083/NewsDB/sports_r0iw7q.jpg"
-              alt="sports"
-            />
+            <img src={sports} alt="sports" />
             <span>Sports</span>
           </a>
         </CategoryStyled>
@@ -73,57 +66,39 @@ export default function Category({ firstPart, secondPart }) {
       <GridContainerStyed>
         <CategoryStyled>
           <a href="/us">
-            <img
-              src="https://res.cloudinary.com/dwagc225r/image/upload/v1571322188/NewsDB/us_ypvofb.jpg"
-              alt="us"
-            />
+            <img src={us} alt="us" />
             <span>United States</span>
           </a>
         </CategoryStyled>
         <CategoryStyled>
           <a href="/uk">
-            <img
-              src="https://res.cloudinary.com/dwagc225r/image/upload/v1571322192/NewsDB/uk_ai1dsh.jpg"
-              alt="uk"
-            />
+            <img src={uk} alt="uk" />
             <span>United Kingdom</span>
           </a>
         </CategoryStyled>
 
         <CategoryStyled>
           <a href="/france">
-            <img
-              src="https://res.cloudinary.com/dwagc225r/image/upload/v1571322196/NewsDB/france_nr55wf.jpg"
-              alt="france"
-            />
+            <img src={france} alt="france" />
             <span>France</span>
           </a>
         </CategoryStyled>
         <CategoryStyled>
           <a href="/india">
-            <img
-              src="https://res.cloudinary.com/dwagc225r/image/upload/v1571322195/NewsDB/india_u8kkid.jpg"
-              alt="india"
-            />
+            <img src={india} alt="india" />
             <span>India</span>
           </a>
         </CategoryStyled>
         <CategoryStyled>
           <a href="/australia">
-            <img
-              src="https://res.cloudinary.com/dwagc225r/image/upload/v1571322191/NewsDB/australia_xkbkhp.jpg"
-              alt="australia"
-            />
+            <img src={australia} alt="australia" />
             <span>Australia</span>
           </a>
         </CategoryStyled>
 
         <CategoryStyled>
           <a href="/italy">
-            <img
-              src="https://res.cloudinary.com/dwagc225r/image/upload/v1571322190/NewsDB/italy_golpzq.jpg"
-              alt="italy"
-            />
+            <img src={italy} alt="italy" />
             <span>Italy</span>
           </a>
         </CategoryStyled>
@@ -133,13 +108,24 @@ export default function Category({ firstPart, secondPart }) {
   return (
     <div>
       <Title firstPart={firstPart} secondPart={secondPart} />
-      <StyledH2>Select by topic</StyledH2>
+      <StyledH2>Topics:</StyledH2>
       <CategoryGrid />
-      <StyledH2>Select by country:</StyledH2>
+      <StyledH2>Countries:</StyledH2>
       <CountryGrid />
     </div>
   );
 }
+
+const PageTransitionIn = keyframes`
+from {
+    opacity: 0;
+    transform: translateY(100px);
+}
+to{
+    opacity: 1,
+    transform: translateY(0px)
+}
+`;
 
 const GridContainerStyed = styled.div`
   display: grid;
@@ -147,7 +133,7 @@ const GridContainerStyed = styled.div`
   grid-template-columns: 1fr 1fr 1fr;
   grid-template-rows: 80px 80px 80px;
   grid-row-gap: 120px;
-
+  animation: ${PageTransitionIn} 0.75s;
   img {
     height: 120px;
     width: 100px;
@@ -156,16 +142,30 @@ const GridContainerStyed = styled.div`
   }
 `;
 
+const CategoryTransitionIn = keyframes`
+from {
+    opacity: 0;
+    transform: translateY(100px);
+}
+to{
+    opacity: 1,
+    transform: translateY(0px)
+}
+`;
+
 const CategoryStyled = styled.div`
   text-align: center;
+  animation: ${CategoryTransitionIn} 0.75s;
   a {
     text-decoration: none;
     font-style: italic;
-    color: brown;
+    color: ${props => (props.theme.mode === "dark" ? "#ffb930" : "#721313")};
     font-size: 1.1rem;
   }
 `;
 
 const StyledH2 = styled.h2`
-  text-align: center;
+  margin: 20px;
+  text-align: start;
+  text-decoration: underline;
 `;

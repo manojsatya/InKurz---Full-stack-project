@@ -22,6 +22,7 @@ export default function Card({
   _id,
   title,
   // comments,
+  url,
   urlToImage,
   description,
   publishedAt,
@@ -84,11 +85,7 @@ export default function Card({
 
   function chooseBookmark() {
     return isBookmarked ? (
-      <BookmarkIcon
-        fontSize="large"
-        onClick={handleBookmarkClick}
-        style={{ fill: "brown" }}
-      />
+      <BookmarkIconStyled fontSize="large" onClick={handleBookmarkClick} />
     ) : (
       <BookmarkIcon fontSize="large" onClick={handleBookmarkClick} />
     );
@@ -97,15 +94,7 @@ export default function Card({
   function showButton() {
     return (
       <ButtonStyled type="submit">
-        <ArrowForwardIcon
-          fontSize="default"
-          style={{
-            marginBottom: "-7px",
-            backgroundColor: "brown",
-            borderRadius: "50%",
-            color: "white"
-          }}
-        />
+        <ArrowForwardIconStyled fontSize="default" />
       </ButtonStyled>
     );
   }
@@ -135,20 +124,25 @@ export default function Card({
       <ContentStyled>
         <TimeStyled>{diffTime}</TimeStyled>
         <h3>{title}</h3>
-        <p>{description}</p>
+        <p>
+          {description}
+          <a href={url} target="_blank" rel="noopener noreferrer">
+            Read More
+          </a>
+        </p>
         <BelowContent>
-          {/* <TimeStyled>{diffTime}</TimeStyled> */}
           <p onClick={toggleComments}>
             {commentsList.length > 1 && commentsList.length + " "}
 
             {commentsList.length === 0
-              ? "Add comment"
+              ? ""
               : commentsList.length === 1
               ? "1 comment"
               : "comments"}
           </p>
           {chooseBookmark()}
         </BelowContent>
+
         <Comments
           comments={commentsList}
           showComments={isCommentsVisible}
@@ -185,13 +179,17 @@ const ContentStyled = styled.section`
   padding: 15px;
   margin-bottom: 30px;
   box-shadow: 0 5px 0px #bdacac;
+  a {
+    margin-left: auto;
+    color: ${props => (props.theme.mode === "dark" ? "#ffb930" : "#721313")};
+  }
 `;
 
 const TimeStyled = styled.p`
   font-style: italic;
   padding: 0;
   margin: 0;
-  color: #721313;
+  color: ${props => (props.theme.mode === "dark" ? "#ffb930" : "#721313")};
 `;
 
 const BelowContent = styled.section`
@@ -205,7 +203,7 @@ const BelowContent = styled.section`
     margin: auto 0;
     padding: 0;
     text-decoration: underline;
-    color: brown;
+    color: ${props => (props.theme.mode === "dark" ? "#ffb930" : "#721313")};
   }
 `;
 
@@ -228,12 +226,13 @@ const FlashStyled = styled.section`
 
 const FormSection = styled.section`
   display: grid;
-  grid-template-columns: 0.25fr 75%;
+  grid-template-columns: 0.25fr auto;
 `;
 
 const FormInputStyled = styled.input`
   margin: 10px 0px 10px 15px;
-  width: ${props => (props.active.length >= 1 ? "78%" : "95%")};
+  /* width: ${props => (props.active.length >= 1 ? "78%" : "95%")}; */
+  width: 80%;
   padding: 10px 5px 5px 10px;
   border-radius: 0.4rem;
   /* transition: width 0.25s; */
@@ -253,4 +252,15 @@ const ButtonStyled = styled.button`
   animation-delay: 1s;
   animation-iteration-count: 1;
   /* transition-delay: 10s; */
+`;
+const ArrowForwardIconStyled = styled(ArrowForwardIcon)`
+  margin-bottom: "-3px";
+  background-color: ${props =>
+    props.theme.mode === "dark" ? "#ffb930" : "#721313"};
+  border-radius: 50%;
+  color: ${props => (props.theme.mode === "dark" ? "black" : "white")};
+`;
+
+const BookmarkIconStyled = styled(BookmarkIcon)`
+  color: ${props => (props.theme.mode === "dark" ? "#ffb930" : "#721313")};
 `;

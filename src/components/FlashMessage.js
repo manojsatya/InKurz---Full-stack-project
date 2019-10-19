@@ -16,7 +16,7 @@ const FlashStyled = styled.section`
   margin: 0 auto;
   width: 100%;
   bottom: 60px;
-  background: #721313;
+  background: ${props => (props.theme.mode === "dark" ? "#ffb930" : "#721313")};
   border-radius: 20px;
   p {
     padding: 8px;

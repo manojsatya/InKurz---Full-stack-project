@@ -13,14 +13,14 @@ export default function Title({ firstPart, secondPart }) {
 }
 
 const TitleStyled = styled.h1`
-  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
-  font-size: 35px;
+  font-family: "Baloo", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 40px;
   margin: 10px auto 10px;
   text-align: center;
 `;
 
 const SpanStyled = styled.span`
-  color: #721313;
+  color: ${props => (props.theme.mode === "dark" ? "#ffb930" : "#721313")};
 `;
 
 const LineStyledTop = styled.hr`

@@ -15,7 +15,7 @@ export default function Reviews({ firstPart, secondPart }) {
   }, []);
   return (
     <div>
-      <NavLink to="/feedback">
+      <NavLink to="/settings">
         <LeftArrowStyled />
       </NavLink>
       <Title firstPart={firstPart} secondPart={secondPart} />
@@ -26,7 +26,7 @@ export default function Reviews({ firstPart, secondPart }) {
 
 const LeftArrowStyled = styled(LeftArrowCircle)`
   position: fixed;
-  color: brown;
+  color: ${props => (props.theme.mode === "dark" ? "#ffb930" : "#721313")};
   top: 15px;
   left: 10px;
   width: 35px;

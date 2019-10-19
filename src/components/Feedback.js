@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import styled from "styled-components/macro";
+import styled, { keyframes } from "styled-components/macro";
 // import PropTypes from "prop-types";
 import Title from "./common/Title";
 import Rating from "@material-ui/lab/Rating";
@@ -28,20 +28,8 @@ export default function Feedback({ firstPart, secondPart }) {
         <LeftArrowStyled />
       </NavLink>
       <Title firstPart={firstPart} secondPart={secondPart} />
-      <Pstyled> Please give us feedback</Pstyled>
       <form onSubmit={handleReviewSubmit}>
-        <TextareaStyled
-          autoFocus
-          name="review"
-          rows="6"
-          cols="35"
-          maxlength="250"
-          value={review}
-          onChange={event => setReview(event.target.value)}
-        ></TextareaStyled>
-        <CharStyled>{review.length}/250 characters remaining</CharStyled>
-
-        <Pstyled>Please give us a rating</Pstyled>
+        <Pstyled>How would you rate us?</Pstyled>
         <Rating
           name="rating"
           value={value}
@@ -49,9 +37,21 @@ export default function Feedback({ firstPart, secondPart }) {
             setValue(newValue);
           }}
         />
+        <Pstyled> How can we improve?</Pstyled>
+        <TextareaStyled
+          autoFocus
+          name="review"
+          rows="6"
+          cols="40"
+          maxlength="250"
+          value={review}
+          onChange={event => setReview(event.target.value)}
+        ></TextareaStyled>
+        <CharStyled>{review.length}/250 characters </CharStyled>
+
         <ButtonStyled type="submit">Submit</ButtonStyled>
       </form>
-      <NavlinkStyled to="/reviews">See all reviews</NavlinkStyled>
+      {/* <NavlinkStyled to="/reviews">See all reviews</NavlinkStyled> */}
     </WrapperStyled>
   );
 }
@@ -60,8 +60,20 @@ export default function Feedback({ firstPart, secondPart }) {
 
 // }
 
+const PageTransitionIn = keyframes`
+from {
+    opacity: 0;
+    transform: translateY(100px);
+}
+to{
+    opacity: 1,
+    transform: translateY(0px)
+}
+`;
+
 const WrapperStyled = styled.div`
-  text-align: center;
+  animation: ${PageTransitionIn} 0.75s;
+  margin: 20px;
 `;
 
 const Pstyled = styled.p`
@@ -69,41 +81,37 @@ const Pstyled = styled.p`
 `;
 const TextareaStyled = styled.textarea`
   margin-top: 15px;
-  box-shadow: 0px 6px 20px grey;
+  box-shadow: 0px 2px 10px grey;
   letter-spacing: 1px;
   line-height: 1.5;
 `;
 
 const ButtonStyled = styled.button`
-  background-color: whitesmoke;
+  color: white;
+  background-color: ${props =>
+    props.theme.mode === "dark" ? "#ffb930" : "#721313"};
   margin: 20px;
   width: 85%;
   height: 35px;
+  outline: none;
   box-shadow: 0px 2px 5px grey;
   border-radius: 2rem;
 `;
 
 const CharStyled = styled.p`
+  text-align: right;
   padding: 0;
   margin: 0;
   left: 0;
   /* font-family: Helvetica, sans-serif; */
   font-style: italic;
   font-size: 0.9rem;
-  color: brown;
-`;
-
-const NavlinkStyled = styled(NavLink)`
-  color: blue;
-  text-decoration: none;
-  font-size: 1.2rem;
-  font-style: italic;
-  text-decoration: underline;
+  color: ${props => (props.theme.mode === "dark" ? "#ffb930" : "#721313")};
 `;
 
 const LeftArrowStyled = styled(LeftArrowCircle)`
   position: fixed;
-  color: brown;
+  color: ${props => (props.theme.mode === "dark" ? "#ffb930" : "#721313")};
   top: 15px;
   left: 10px;
   width: 35px;
