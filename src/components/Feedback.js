@@ -51,7 +51,6 @@ export default function Feedback({ firstPart, secondPart }) {
 
         <ButtonStyled type="submit">Submit</ButtonStyled>
       </form>
-      {/* <NavlinkStyled to="/reviews">See all reviews</NavlinkStyled> */}
     </WrapperStyled>
   );
 }
