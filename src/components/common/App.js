@@ -9,6 +9,7 @@ import Feedback from "../Feedback";
 import Reviews from "../reviews/ReviewsPage";
 import Category from "../Category";
 import GlobalStyles from "./GlobalStyles";
+import Search from "../Search";
 
 export default function App() {
   const [cards, setCards] = useState([]);
@@ -211,6 +212,17 @@ export default function App() {
           <Route
             path="/categories"
             render={() => <Category firstPart="Cate" secondPart="gory" />}
+          />
+          <Route
+            path="/search"
+            render={() => (
+              <Search
+                firstPart="Sea"
+                secondPart="rch"
+                cards={cards}
+                onBookmarkClick={handleBookmarkClick}
+              />
+            )}
           />
           <Route
             path="/settings"
