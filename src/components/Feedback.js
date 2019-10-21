@@ -43,9 +43,8 @@ export default function Feedback({ firstPart, secondPart }) {
           name="review"
           rows="6"
           cols="40"
-          maxlength="250"
           value={review}
-          onChange={event => setReview(event.target.value)}
+          onChange={event => setReview(event.target.value.substr(0, 250))}
         ></TextareaStyled>
         <CharStyled>{review.length}/250 characters </CharStyled>
 
