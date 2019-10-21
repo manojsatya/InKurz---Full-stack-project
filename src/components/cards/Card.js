@@ -24,6 +24,7 @@ export default function Card({
   // comments,
   url,
   urlToImage,
+  category,
   description,
   publishedAt,
   onBookmarkClick,
@@ -121,6 +122,9 @@ export default function Card({
   return (
     <CardStyled>
       <ImgStyled src={urlToImage} alt="card_image" />
+      {/* <CategoryStyled>
+        <span>{category}</span>
+      </CategoryStyled> */}
       <ContentStyled>
         <TimeStyled>{diffTime}</TimeStyled>
         <h3>{title}</h3>
@@ -263,4 +267,15 @@ const ArrowForwardIconStyled = styled(ArrowForwardIcon)`
 
 const BookmarkIconStyled = styled(BookmarkIcon)`
   color: ${props => (props.theme.mode === "dark" ? "#ffb930" : "#721313")};
+`;
+
+const CategoryStyled = styled.span`
+  background-color: ${props =>
+    props.theme.mode === "dark" ? "#ffb930" : "#721313"};
+  color: ${props => (props.theme.mode === "dark" ? "black" : "white")};
+  width: 35%;
+  padding: 5px 5px 5px 15px;
+  font-size: 1.1rem;
+  text-transform: capitalize;
+  z-index: 1;
 `;

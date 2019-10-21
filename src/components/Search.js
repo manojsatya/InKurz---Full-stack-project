@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import Title from "./common/Title";
-import styled from "styled-components/macro";
+import styled, { keyframes } from "styled-components/macro";
 import Card from "./cards/Card";
 import { postComment } from "./cards/servicesComment";
 
@@ -25,7 +25,7 @@ export default function Search({
   console.log({ searchedCards });
 
   return (
-    <div>
+    <SearchStyled>
       <Title firstPart={firstPart} secondPart={secondPart} />
 
       <InputStyled
@@ -56,9 +56,23 @@ export default function Search({
             onCommentSubmit={onCommentSubmit}
           />
         ))}
-    </div>
+    </SearchStyled>
   );
 }
+const PageTransitionIn = keyframes`
+from {
+    opacity: 0;
+    transform: translateY(100px);
+}
+to{
+    opacity: 1,
+    transform: translateY(0px)
+}
+`;
+
+const SearchStyled = styled.div`
+  animation: ${PageTransitionIn} 0.75s;
+`;
 
 const InputStyled = styled.input`
   display: flex;
