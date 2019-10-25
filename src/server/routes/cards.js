@@ -65,7 +65,7 @@ router.post(
 
       card.comments.unshift(newComment);
       await card.save();
-      res.json(card.comments);
+      res.json(card);
     } catch (err) {
       console.log(err.message);
       res.status(500).send("Server Error");
@@ -105,7 +105,7 @@ router.delete("/:id/comments/:comment_id", auth, async (req, res) => {
 
     await card.save();
 
-    res.json(card.comments);
+    res.json(card);
   } catch (err) {
     console.log(err.message);
     res.status(500).send("Server Error");

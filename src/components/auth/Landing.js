@@ -13,12 +13,12 @@ export default function Landing() {
     }, 6000);
   }, [error]);
   const history = useHistory();
+
   function handleLoginSubmit(event) {
     event.preventDefault();
     const form = event.target;
     const formData = new FormData(form);
     const data = Object.fromEntries(formData);
-    console.log(data);
     postLoginUser(data).then(res => {
       if (res.token) {
         console.log(res.token);
@@ -32,7 +32,10 @@ export default function Landing() {
   }
   return (
     <LoginPageStyled>
-      <p>InKurz</p>
+      <TitleStyled>
+        In
+        <SpanStyled>Kurz</SpanStyled>
+      </TitleStyled>
       <LoginFormStyled onSubmit={event => handleLoginSubmit(event)}>
         <InputField>Email ID</InputField>
         <InputStyled
@@ -103,4 +106,15 @@ const InputStyled = styled.input`
 const InputField = styled.p`
   margin: 0;
   font-size: 1.3rem;
+`;
+
+const TitleStyled = styled.h1`
+  font-family: "Baloo", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  font-size: 4rem;
+  margin: 100px auto 10px;
+  text-align: center;
+`;
+
+const SpanStyled = styled.span`
+  color: ${props => (props.theme.mode === "dark" ? "#ffb930" : "#721313")};
 `;

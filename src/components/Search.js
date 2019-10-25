@@ -16,7 +16,7 @@ export default function Search({
   }
 
   const searchedCards = cards
-    .filter(card => card.description !== null)
+    .filter(card => card.description)
     .filter(
       card =>
         card.description.toLowerCase().indexOf(search.toLowerCase()) !== -1

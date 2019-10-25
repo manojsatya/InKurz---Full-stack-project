@@ -75,10 +75,14 @@ export default function Comments({
     <div>
       <CommentsSectionStyled className={showComments ? "visible" : null}>
         {comments.map((item, index) => (
-          <div>
-            <CommentsStyled key={index}>
-              <img src="https://source.unsplash.com/random" alt="img-1" />
-              <p>{item.comment}</p>
+          <div key={item._id}>
+            <CommentsStyled>
+              <img src={item.avatar} alt="img-1" />
+
+              <p>
+                <strong>{item.name}: </strong> {item.comment}
+              </p>
+              {/* <p>{item.comment}</p> */}
             </CommentsStyled>
             <EditDeleteStyled>
               <div>

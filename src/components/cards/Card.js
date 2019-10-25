@@ -6,6 +6,9 @@ import Comments from "./Comments";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { getComments, deleteComment, patchComment } from "./servicesComment";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import { NavLink } from "react-router-dom";
 
 Card.propTypes = {
   _id: PropTypes.string,
@@ -38,11 +41,13 @@ export default function Card({
   const [isCommentsVisible, setisCommentsVisible] = useState(false);
   const [comment, setComment] = useState("");
   const [commentsList, setCommentsList] = useState([]);
+  const [logindialog, setLoginDailog] = useState(false);
 
   useEffect(() => {
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       setMsg("");
     }, 3000);
+    return () => clearTimeout(timeout);
   }, [isBookmarked]);
 
   useEffect(() => {
@@ -67,15 +72,43 @@ export default function Card({
 
   function handleCommentSubmit(event) {
     event.preventDefault();
-    const form = event.target;
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData);
-    onCommentSubmit(_id, data).then(card => setCommentsList(card.comments));
-    form.reset();
-    setComment("");
-    form.comment.focus();
+    if (localStorage.getItem("jwtToken")) {
+      const form = event.target;
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+      onCommentSubmit(_id, data).then(card => setCommentsList(card.comments));
+      form.reset();
+      setComment("");
+      form.comment.focus();
+    } else {
+      setLoginDailog(true);
+      //  loginRequest();
+    }
   }
 
+  function handleClose() {
+    setLoginDailog(false);
+  }
+
+  function loginRequest() {
+    return (
+      <Dialog
+        open={logindialog}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">
+          Please sign in to comment
+        </DialogTitle>
+
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <NavLink to="/" onClick={handleClose} style={{ margin: "0 auto" }}>
+            Login
+          </NavLink>
+        </div>
+      </Dialog>
+    );
+  }
   function handleBookmarkClick(event) {
     event.stopPropagation();
     isBookmarked
@@ -92,7 +125,7 @@ export default function Card({
     );
   }
 
-  function showButton() {
+  function ShowButton() {
     return (
       <ButtonStyled type="submit">
         <ArrowForwardIconStyled fontSize="default" />
@@ -113,7 +146,7 @@ export default function Card({
             active={comment}
             value={comment}
           />
-          {comment.length >= 1 && showButton()}
+          {comment.length >= 1 && <ShowButton />}
         </form>
       </FormSection>
     );
@@ -148,7 +181,7 @@ export default function Card({
           </p>
           {chooseBookmark()}
         </BelowContent>
-
+        {loginRequest()}
         <Comments
           comments={commentsList}
           showComments={isCommentsVisible}
@@ -271,13 +304,13 @@ const BookmarkIconStyled = styled(BookmarkIcon)`
   color: ${props => (props.theme.mode === "dark" ? "#ffb930" : "#721313")};
 `;
 
-const CategoryStyled = styled.span`
-  background-color: ${props =>
-    props.theme.mode === "dark" ? "#ffb930" : "#721313"};
-  color: ${props => (props.theme.mode === "dark" ? "black" : "white")};
-  width: 35%;
-  padding: 5px 5px 5px 15px;
-  font-size: 1.1rem;
-  text-transform: capitalize;
-  z-index: 1;
-`;
+// const CategoryStyled = styled.span`
+//   background-color: ${props =>
+//     props.theme.mode === "dark" ? "#ffb930" : "#721313"};
+//   color: ${props => (props.theme.mode === "dark" ? "black" : "white")};
+//   width: 35%;
+//   padding: 5px 5px 5px 15px;
+//   font-size: 1.1rem;
+//   text-transform: capitalize;
+//   z-index: 1;
+// `;

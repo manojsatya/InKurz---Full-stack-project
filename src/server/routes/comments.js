@@ -10,15 +10,15 @@ router.get("/:id/comments", (req, res) => {
     .catch(err => res.json(err));
 });
 
-router.post("/:id", (req, res) => {
-  Card.findByIdAndUpdate(req.params.id, req.body, { new: true })
-    .then(card => {
-      const newComment = card.comments.create(req.body);
-      card.comments.push(newComment);
-      card.save().then(() => res.json(card));
-    })
-    .catch(err => res.json(err));
-});
+// router.post("/:id", (req, res) => {
+//   Card.findByIdAndUpdate(req.params.id, req.body, { new: true })
+//     .then(card => {
+//       const newComment = card.comments.create(req.body);
+//       card.comments.push(newComment);
+//       card.save().then(() => res.json(card));
+//     })
+//     .catch(err => res.json(err));
+// });
 
 router.patch("/:id/comments/:comment_id", (req, res) => {
   Card.findByIdAndUpdate(req.params.id)

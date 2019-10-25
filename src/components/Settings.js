@@ -15,16 +15,13 @@ export default function Settings({ firstPart, secondPart, onDarkModeClick }) {
     if (localStorage.getItem("jwtToken")) {
       const token = localStorage.getItem("jwtToken");
       const decoded = jwtDecode(token);
-      console.log(token);
       const user = decoded.user.name;
-      console.log(decoded.user.name);
-      console.log(decoded.user.avatar);
       setUser(user);
       setUserImage(decoded.user.avatar);
     } else {
       console.log("No token");
     }
-  }, []);
+  }, [user]);
 
   function handleDarkModeClick(event) {
     if (event) {
@@ -44,7 +41,7 @@ export default function Settings({ firstPart, secondPart, onDarkModeClick }) {
   }
 
   function handleLogout() {
-    localStorage.setItem("jwtToken", "");
+    localStorage.removeItem("jwtToken");
     setUser("");
     setUserImage("");
   }
@@ -70,15 +67,6 @@ export default function Settings({ firstPart, secondPart, onDarkModeClick }) {
       <Title firstPart={firstPart} secondPart={secondPart} />
 
       <WrapperStyled>
-        {/* {user && (
-          <UserInfoStyled>
-            {userImage && <ImgStyled src={userImage} alt="userImage" />}
-            <UserSectionStyled>
-              <p>{user}</p>
-              <button onClick={handleLogout}> Logout</button>
-            </UserSectionStyled>
-          </UserInfoStyled>
-        )} */}
         {checkUserLoggedIn()}
 
         <NavlinkStyled to="/feedback"> Feedback/Suggestions</NavlinkStyled>
