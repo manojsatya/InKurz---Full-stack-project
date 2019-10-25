@@ -18,7 +18,7 @@ export default function Navigation({ bookmarkCount }) {
   const classes = useStyles();
   return (
     <NavigationStyled>
-      <LinkStyled exact to="/">
+      <LinkStyled exact to="/mainpage">
         <HomeStyled />
       </LinkStyled>
       <LinkStyled to="/bookmarks">

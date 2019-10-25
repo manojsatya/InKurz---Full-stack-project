@@ -35,9 +35,10 @@ router.post(
 
       //check user exists by email
       if (user) {
-        return res
-          .status(400)
-          .json({ errors: [{ msg: "User already exists" }] });
+        return res.json({
+          success: false,
+          message: "Account already exists"
+        });
       }
       // Get users gravatar
       const avatar = gravatar.url(email, {
@@ -62,7 +63,9 @@ router.post(
 
       const payload = {
         user: {
-          id: user.id
+          id: user.id,
+          name: user.name,
+          avatar: user.avatar
         }
       };
 

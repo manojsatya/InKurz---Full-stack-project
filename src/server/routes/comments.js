@@ -32,16 +32,16 @@ router.patch("/:id/comments/:comment_id", (req, res) => {
     .catch(err => res.json(err));
 });
 
-router.delete("/:id/comments/:comment_id", (req, res) => {
-  Card.findByIdAndUpdate(req.params.id)
-    .then(card => {
-      const list = card.comments.filter(
-        comment => comment._id.toString() !== req.params.comment_id
-      );
-      card.comments = list;
-      card.save().then(() => res.json(card));
-    })
-    .catch(err => res.json(err));
-});
+// router.delete("/:id/comments/:comment_id", (req, res) => {
+//   Card.findByIdAndUpdate(req.params.id)
+//     .then(card => {
+//       const list = card.comments.filter(
+//         comment => comment._id.toString() !== req.params.comment_id
+//       );
+//       card.comments = list;
+//       card.save().then(() => res.json(card));
+//     })
+//     .catch(err => res.json(err));
+// });
 
 module.exports = router;

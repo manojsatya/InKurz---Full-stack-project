@@ -127,7 +127,9 @@ export default function Card({
       </CategoryStyled> */}
       <ContentStyled>
         <TimeStyled>{diffTime}</TimeStyled>
-        <h3>{title}</h3>
+        <h5>
+          <b>{title}</b>
+        </h5>
         <p>
           {description}
           <a href={url} target="_blank" rel="noopener noreferrer">
