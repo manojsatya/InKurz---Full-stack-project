@@ -10,6 +10,7 @@ I developed **InKurz** news app as my final project during the [neuefische](http
 - [Technologies](#technologies)
 - [Setup](#setup)
 - [Acknowledgements](#Acknowledgements)
+- [Images](#images)
 
 ## Introduction
 
@@ -89,3 +90,10 @@ As of now, only a small part of the app is documented.
 
 - I would like to thank the team of neuefische for teaching us all the above concepts. I had a lot of fun.
 - I also would like to thank my fellow bootcampers. They are a gem of people and really helpful.
+
+## Images
+
+|                     Light mode                      |                     Dark mode                      |
+| :-------------------------------------------------: | :------------------------------------------------: |
+| <img src="./public/Homepage_light.png" width="200"> | <img src="./public/Homepage_dark.png" width="200"> |
+| <img src="./public/Reviews_light.png" width="200">  | <img src="./public/Reviews_dark.png" width="200">  |
