@@ -17,7 +17,8 @@ export function patchComment(id, data) {
     method: "PATCH",
     body: JSON.stringify(data),
     headers: {
-      "content-type": "application/json"
+      "content-type": "application/json",
+      "x-auth-token": localStorage.getItem("jwtToken")
     }
   }).then(res => res.json());
 }
@@ -27,17 +28,19 @@ export function deleteComment(id, data) {
     method: "DELETE",
     body: JSON.stringify(data),
     headers: {
-      "content-type": "application/json"
+      "content-type": "application/json",
+      "x-auth-token": localStorage.getItem("jwtToken")
     }
   }).then(res => res.json());
 }
 
 function fetchComments({ method = "GET", id = "", data } = {}) {
-  return fetch("/news/" + id, {
+  return fetch("/news/" + id + "/comments", {
     method,
     body: JSON.stringify(data),
     headers: {
-      "content-type": "application/json"
+      "content-type": "application/json",
+      "x-auth-token": localStorage.getItem("jwtToken")
     }
   }).then(res => res.json());
 }

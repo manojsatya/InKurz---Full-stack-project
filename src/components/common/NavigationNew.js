@@ -18,8 +18,8 @@ export default function Navigation({ bookmarkCount }) {
   const classes = useStyles();
   return (
     <NavigationStyled>
-      <LinkStyled exact to="/">
-        <HomeStyled />
+      <LinkStyled exact to="/mainpage">
+        <HomeIconStyled />
       </LinkStyled>
       <LinkStyled to="/bookmarks">
         <Badge
@@ -27,17 +27,17 @@ export default function Navigation({ bookmarkCount }) {
           badgeContent={bookmarkCount}
           color="error"
         >
-          <BookmarkStyled />
+          <BookmarkIconStyled />
         </Badge>
       </LinkStyled>
       <LinkStyled exact to="/categories">
-        <GridStyled />
+        <GridIconStyled />
       </LinkStyled>
       <LinkStyled exact to="/search">
-        <SearchStyled />
+        <SearchIconStyled />
       </LinkStyled>
       <LinkStyled exact to="/settings">
-        <SettingsStyled />
+        <SettingsIconStyled />
       </LinkStyled>
     </NavigationStyled>
   );
@@ -63,20 +63,20 @@ const NavigationStyled = styled.nav`
   bottom: -1px;
 `;
 
-const HomeStyled = styled(Home)`
+const HomeIconStyled = styled(Home)`
   width: 35px;
 `;
-const BookmarkStyled = styled(Bookmark)`
-  width: 35px;
-`;
-
-const GridStyled = styled(Grid)`
+const BookmarkIconStyled = styled(Bookmark)`
   width: 35px;
 `;
 
-const SearchStyled = styled(Search)`
+const GridIconStyled = styled(Grid)`
   width: 35px;
 `;
-const SettingsStyled = styled(Settings)`
+
+const SearchIconStyled = styled(Search)`
+  width: 35px;
+`;
+const SettingsIconStyled = styled(Settings)`
   width: 35px;
 `;

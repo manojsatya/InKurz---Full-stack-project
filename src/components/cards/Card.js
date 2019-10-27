@@ -6,6 +6,10 @@ import Comments from "./Comments";
 import ArrowForwardIcon from "@material-ui/icons/ArrowForward";
 import AccountCircleIcon from "@material-ui/icons/AccountCircle";
 import { getComments, deleteComment, patchComment } from "./servicesComment";
+import Dialog from "@material-ui/core/Dialog";
+import DialogTitle from "@material-ui/core/DialogTitle";
+import { NavLink } from "react-router-dom";
+import jwtDecode from "jwt-decode";
 
 Card.propTypes = {
   _id: PropTypes.string,
@@ -21,7 +25,6 @@ Card.propTypes = {
 export default function Card({
   _id,
   title,
-  // comments,
   url,
   urlToImage,
   category,
@@ -38,16 +41,28 @@ export default function Card({
   const [isCommentsVisible, setisCommentsVisible] = useState(false);
   const [comment, setComment] = useState("");
   const [commentsList, setCommentsList] = useState([]);
+  const [logindialog, setLoginDailog] = useState(false);
+  const [userImage, setUserImage] = useState("");
 
   useEffect(() => {
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       setMsg("");
     }, 3000);
+    return () => clearTimeout(timeout);
   }, [isBookmarked]);
 
   useEffect(() => {
     getComments(_id).then(setCommentsList);
   }, [_id]);
+
+  useEffect(() => {
+    if (localStorage.getItem("jwtToken")) {
+      const token = localStorage.getItem("jwtToken");
+      const decoded = jwtDecode(token);
+
+      setUserImage(decoded.user.avatar);
+    }
+  }, [userImage]);
 
   function toggleComments() {
     setisCommentsVisible(!isCommentsVisible);
@@ -67,15 +82,42 @@ export default function Card({
 
   function handleCommentSubmit(event) {
     event.preventDefault();
-    const form = event.target;
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData);
-    onCommentSubmit(_id, data).then(card => setCommentsList(card.comments));
-    form.reset();
-    setComment("");
-    form.comment.focus();
+    if (localStorage.getItem("jwtToken")) {
+      const form = event.target;
+      const formData = new FormData(form);
+      const data = Object.fromEntries(formData);
+      onCommentSubmit(_id, data).then(card => setCommentsList(card.comments));
+      form.reset();
+      setComment("");
+      form.comment.focus();
+    } else {
+      setLoginDailog(true);
+    }
   }
 
+  function handleClose() {
+    setLoginDailog(false);
+  }
+
+  function loginRequest() {
+    return (
+      <Dialog
+        open={logindialog}
+        onClose={handleClose}
+        aria-labelledby="form-dialog-title"
+      >
+        <DialogTitle id="form-dialog-title">
+          Please sign in to comment
+        </DialogTitle>
+
+        <div style={{ display: "flex", justifyContent: "space-between" }}>
+          <NavLink to="/" onClick={handleClose} style={{ margin: "0 auto" }}>
+            Login
+          </NavLink>
+        </div>
+      </Dialog>
+    );
+  }
   function handleBookmarkClick(event) {
     event.stopPropagation();
     isBookmarked
@@ -92,7 +134,7 @@ export default function Card({
     );
   }
 
-  function showButton() {
+  function ShowButton() {
     return (
       <ButtonStyled type="submit">
         <ArrowForwardIconStyled fontSize="default" />
@@ -103,7 +145,9 @@ export default function Card({
   function inputComment() {
     return (
       <FormSection>
-        <AccountCircleIcon fontSize="large" style={{ marginTop: "10px" }} />
+        {(userImage && <UserImgStyled src={userImage} />) || (
+          <AccountCircleIcon fontSize="large" style={{ marginTop: "10px" }} />
+        )}
         <form onSubmit={handleCommentSubmit}>
           <FormInputStyled
             placeholder="Add a comment..."
@@ -113,7 +157,7 @@ export default function Card({
             active={comment}
             value={comment}
           />
-          {comment.length >= 1 && showButton()}
+          {comment.length >= 1 && <ShowButton />}
         </form>
       </FormSection>
     );
@@ -122,12 +166,11 @@ export default function Card({
   return (
     <CardStyled>
       <ImgStyled src={urlToImage} alt="card_image" />
-      {/* <CategoryStyled>
-        <span>{category}</span>
-      </CategoryStyled> */}
       <ContentStyled>
         <TimeStyled>{diffTime}</TimeStyled>
-        <h3>{title}</h3>
+        <h5>
+          <b>{title}</b>
+        </h5>
         <p>
           {description}
           <a href={url} target="_blank" rel="noopener noreferrer">
@@ -146,7 +189,7 @@ export default function Card({
           </p>
           {chooseBookmark()}
         </BelowContent>
-
+        {loginRequest()}
         <Comments
           comments={commentsList}
           showComments={isCommentsVisible}
@@ -198,7 +241,6 @@ const TimeStyled = styled.p`
 
 const BelowContent = styled.section`
   padding: 0;
-  /* margin: 5px; */
   display: flex;
   flex-direction: row;
   justify-content: space-between;
@@ -220,8 +262,6 @@ const FlashStyled = styled.section`
   bottom: 20vh;
   background: #721313;
   border-radius: 20px;
-  /* opacity: ${props => (props.bookmarkClick ? "1" : "0")};
-  transition: all 0.5s; */
   p {
     padding: 8px;
     margin: 0;
@@ -235,11 +275,9 @@ const FormSection = styled.section`
 
 const FormInputStyled = styled.input`
   margin: 10px 0px 10px 15px;
-  /* width: ${props => (props.active.length >= 1 ? "78%" : "95%")}; */
   width: 80%;
   padding: 10px 5px 5px 10px;
   border-radius: 0.4rem;
-  /* transition: width 0.25s; */
 `;
 
 const submitButtonAnimation = keyframes`
@@ -255,7 +293,6 @@ const ButtonStyled = styled.button`
   animation: ${submitButtonAnimation} 1s linear;
   animation-delay: 1s;
   animation-iteration-count: 1;
-  /* transition-delay: 10s; */
 `;
 const ArrowForwardIconStyled = styled(ArrowForwardIcon)`
   margin-bottom: "-3px";
@@ -269,13 +306,9 @@ const BookmarkIconStyled = styled(BookmarkIcon)`
   color: ${props => (props.theme.mode === "dark" ? "#ffb930" : "#721313")};
 `;
 
-const CategoryStyled = styled.span`
-  background-color: ${props =>
-    props.theme.mode === "dark" ? "#ffb930" : "#721313"};
-  color: ${props => (props.theme.mode === "dark" ? "black" : "white")};
-  width: 35%;
-  padding: 5px 5px 5px 15px;
-  font-size: 1.1rem;
-  text-transform: capitalize;
-  z-index: 1;
+const UserImgStyled = styled.img`
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  margin-top: 10px;
 `;

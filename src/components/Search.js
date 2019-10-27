@@ -3,6 +3,7 @@ import Title from "./common/Title";
 import styled, { keyframes } from "styled-components/macro";
 import Card from "./cards/Card";
 import { postComment } from "./cards/servicesComment";
+import NavigationNew from "./common/NavigationNew";
 
 export default function Search({
   cards,
@@ -16,47 +17,53 @@ export default function Search({
   }
 
   const searchedCards = cards
-    .filter(card => card.description !== null)
+    .filter(card => card.description)
     .filter(
       card =>
         card.description.toLowerCase().indexOf(search.toLowerCase()) !== -1
     );
 
-  console.log({ searchedCards });
+  function bookmarkCount() {
+    const bookmarkCountNum = cards.filter(card => card.isBookmarked).length;
+    return bookmarkCountNum;
+  }
 
   return (
-    <SearchStyled>
-      <Title firstPart={firstPart} secondPart={secondPart} />
+    <div>
+      <SearchStyled>
+        <Title firstPart={firstPart} secondPart={secondPart} />
 
-      <InputStyled
-        type="text"
-        autoFocus
-        name="search"
-        placeholder="Search ..."
-        autoComplete="off"
-        value={search}
-        onChange={event => setSearch(event.target.value)}
-      />
+        <InputStyled
+          type="text"
+          autoFocus
+          name="search"
+          placeholder="Search ..."
+          autoComplete="off"
+          value={search}
+          onChange={event => setSearch(event.target.value)}
+        />
 
-      <SearchResultsStyled>
-        {search.length >= 1 && (
-          <ButtonStyled onClick={() => setSearch("")}>
-            Clear Search
-          </ButtonStyled>
-        )}
-        {search.length >= 1 && <p>{searchedCards.length} articles found</p>}
-      </SearchResultsStyled>
+        <SearchResultsStyled>
+          {search.length >= 1 && (
+            <ButtonStyled onClick={() => setSearch("")}>
+              Clear Search
+            </ButtonStyled>
+          )}
+          {search.length >= 1 && <p>{searchedCards.length} articles found</p>}
+        </SearchResultsStyled>
 
-      {search.length >= 1 &&
-        searchedCards.map(card => (
-          <Card
-            key={card._id}
-            {...card}
-            onBookmarkClick={() => onBookmarkClick(card)}
-            onCommentSubmit={onCommentSubmit}
-          />
-        ))}
-    </SearchStyled>
+        {search.length >= 1 &&
+          searchedCards.map(card => (
+            <Card
+              key={card._id}
+              {...card}
+              onBookmarkClick={() => onBookmarkClick(card)}
+              onCommentSubmit={onCommentSubmit}
+            />
+          ))}
+      </SearchStyled>
+      <NavigationNew bookmarkCount={bookmarkCount()} />
+    </div>
   );
 }
 const PageTransitionIn = keyframes`

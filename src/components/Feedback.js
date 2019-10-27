@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import styled, { keyframes } from "styled-components/macro";
-// import PropTypes from "prop-types";
 import Title from "./common/Title";
 import Rating from "@material-ui/lab/Rating";
 import { postReview } from "./reviews/servicesReview";
@@ -54,10 +53,6 @@ export default function Feedback({ firstPart, secondPart }) {
   );
 }
 
-// Settings.propTypes = {
-
-// }
-
 const PageTransitionIn = keyframes`
 from {
     opacity: 0;
@@ -101,7 +96,6 @@ const CharStyled = styled.p`
   padding: 0;
   margin: 0;
   left: 0;
-  /* font-family: Helvetica, sans-serif; */
   font-style: italic;
   font-size: 0.9rem;
   color: ${props => (props.theme.mode === "dark" ? "#ffb930" : "#721313")};

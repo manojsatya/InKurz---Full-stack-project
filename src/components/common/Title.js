@@ -36,4 +36,3 @@ const LineStyledBottom = styled.hr`
   width: 85%;
   margin-top: 0px;
 `;
-// 721313

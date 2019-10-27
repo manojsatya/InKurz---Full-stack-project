@@ -1,11 +1,26 @@
 const mongoose = require("mongoose");
 
-const Comment = mongoose.model("Comment", {
-  comment: String,
-  cardID: [
+const Comment = mongoose.Schema({
+  user: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "users"
+  },
+  comment: {
+    type: String,
+    required: true
+  },
+  name: {
+    type: String
+  },
+  avatar: {
+    type: String
+  },
+  likes: [
     {
-      type: mongoose.Schema.Types.ObjectId,
-      ref: "Card"
+      user: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "users"
+      }
     }
   ]
 });

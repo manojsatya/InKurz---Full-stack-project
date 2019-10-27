@@ -13,9 +13,13 @@ import sports from "../assets/icons/sports.jpg";
 import technology from "../assets/icons/technology.jpg";
 import uk from "../assets/icons/uk.jpg";
 import us from "../assets/icons/us.jpg";
-// TODO import all images and replace the links
+import NavigationNew from "./common/NavigationNew";
 
-export default function Category({ firstPart, secondPart }) {
+export default function Category({ firstPart, secondPart, cards }) {
+  function bookmarkCount() {
+    const bookmarkCountNum = cards.filter(card => card.isBookmarked).length;
+    return bookmarkCountNum;
+  }
   function CategoryGrid() {
     return (
       <GridContainerStyed>
@@ -112,6 +116,7 @@ export default function Category({ firstPart, secondPart }) {
       <CategoryGrid />
       <StyledH2>Countries:</StyledH2>
       <CountryGrid />
+      <NavigationNew bookmarkCount={bookmarkCount()} />
     </div>
   );
 }

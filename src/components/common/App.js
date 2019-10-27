@@ -3,13 +3,14 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from "../HomePage";
 import { ThemeProvider } from "styled-components";
 import { getCards, patchCard } from "../cards/servicesCard";
-import NavigationNew from "./NavigationNew";
 import Settings from "../Settings";
 import Feedback from "../Feedback";
 import Reviews from "../reviews/ReviewsPage";
 import Category from "../Category";
 import GlobalStyles from "./GlobalStyles";
 import Search from "../Search";
+import Landing from "../auth/Landing";
+import Register from "../auth/Register";
 
 export default function App() {
   const [cards, setCards] = useState([]);
@@ -40,32 +41,68 @@ export default function App() {
     );
   }
 
-  function bookmarkCount() {
-    const bookmarkCountNum = cards.filter(card => card.isBookmarked).length;
-    return bookmarkCountNum;
-  }
-
   function handleDarkModeClick() {
     setTheme({ mode: localStorage.getItem("mode") });
   }
+
+  function withHomePage(firstPart, secondPart, filterProp) {
+    return () => {
+      const filteredCards = filterProp
+        ? cards.filter(card => card.country === filterProp)
+        : cards;
+      return (
+        <HomePage
+          cards={filteredCards}
+          onBookmarkClick={handleBookmarkClick}
+          firstPart={firstPart}
+          secondPart={secondPart}
+        />
+      );
+    };
+  }
+
+  function withCategoryPage(firstPart, secondPart, filterProp) {
+    return () => {
+      const filteredCards = filterProp
+        ? cards.filter(card => card.category === filterProp)
+        : cards;
+      return (
+        <HomePage
+          cards={filteredCards}
+          onBookmarkClick={handleBookmarkClick}
+          firstPart={firstPart}
+          secondPart={secondPart}
+        />
+      );
+    };
+  }
+  const MainPage = withHomePage("In", "Kurz", "de");
+  const USPage = withHomePage("United", "States", "us");
+  const UKPage = withHomePage("United", "Kingdom", "gb");
+  const FrancePage = withHomePage("Fra", "nce", "fr");
+  const IndiaPage = withHomePage("Ind", "ia", "in");
+  const AustraliaPage = withHomePage("Austr", "alia", "au");
+  const ItalyPage = withHomePage("Ita", "ly", "it");
+  const BusinessPage = withCategoryPage("Busi", "ness", "business");
+  const EntertainmentPage = withCategoryPage(
+    "Enterta",
+    "inment",
+    "entertainment"
+  );
+  const HealthPage = withCategoryPage("Hea", "lth", "health");
+  const SciencePage = withCategoryPage("Scie", "nce", "science");
+  const TechnologyPage = withCategoryPage("Techno", "logy", "technology");
+  const SportsPage = withCategoryPage("Spo", "rts", "sports");
 
   return (
     <ThemeProvider theme={theme}>
       <GlobalStyles />
       <Router>
         <Switch>
-          <Route
-            exact
-            path="/"
-            render={() => (
-              <HomePage
-                cards={cards.filter(card => card.country === "de")}
-                onBookmarkClick={handleBookmarkClick}
-                firstPart="In"
-                secondPart="Kurz"
-              />
-            )}
-          />
+          <Route exact path="/" component={Landing} />
+          <Route exact path="/register" component={Register} />
+
+          <Route path="/mainpage" component={MainPage} />
           <Route
             path="/bookmarks"
             render={() => (
@@ -77,141 +114,25 @@ export default function App() {
               />
             )}
           />
-          <Route
-            path="/business"
-            render={() => (
-              <HomePage
-                cards={cards.filter(card => card.category === "business")}
-                onBookmarkClick={handleBookmarkClick}
-                firstPart="Busi"
-                secondPart="ness"
-              />
-            )}
-          />
-          <Route
-            path="/entertainment"
-            render={() => (
-              <HomePage
-                cards={cards.filter(card => card.category === "entertainment")}
-                onBookmarkClick={handleBookmarkClick}
-                firstPart="Enter"
-                secondPart="tainment"
-              />
-            )}
-          />
-          <Route
-            path="/health"
-            render={() => (
-              <HomePage
-                cards={cards.filter(card => card.category === "health")}
-                onBookmarkClick={handleBookmarkClick}
-                firstPart="Hea"
-                secondPart="lth"
-              />
-            )}
-          />
-          <Route
-            path="/science"
-            render={() => (
-              <HomePage
-                cards={cards.filter(card => card.category === "science")}
-                onBookmarkClick={handleBookmarkClick}
-                firstPart="Sci"
-                secondPart="ence"
-              />
-            )}
-          />
-          <Route
-            path="/technology"
-            render={() => (
-              <HomePage
-                cards={cards.filter(card => card.category === "technology")}
-                onBookmarkClick={handleBookmarkClick}
-                firstPart="Tech"
-                secondPart="nology"
-              />
-            )}
-          />
-          <Route
-            path="/sports"
-            render={() => (
-              <HomePage
-                cards={cards.filter(card => card.category === "sports")}
-                onBookmarkClick={handleBookmarkClick}
-                firstPart="Spo"
-                secondPart="rts"
-              />
-            )}
-          />
-          <Route
-            path="/us"
-            render={() => (
-              <HomePage
-                cards={cards.filter(card => card.country === "us")}
-                onBookmarkClick={handleBookmarkClick}
-                firstPart="United"
-                secondPart="States"
-              />
-            )}
-          />
-          <Route
-            path="/uk"
-            render={() => (
-              <HomePage
-                cards={cards.filter(card => card.country === "gb")}
-                onBookmarkClick={handleBookmarkClick}
-                firstPart="United"
-                secondPart="Kingdom"
-              />
-            )}
-          />
-          <Route
-            path="/france"
-            render={() => (
-              <HomePage
-                cards={cards.filter(card => card.country === "fr")}
-                onBookmarkClick={handleBookmarkClick}
-                firstPart="Fran"
-                secondPart="ce"
-              />
-            )}
-          />
-          <Route
-            path="/india"
-            render={() => (
-              <HomePage
-                cards={cards.filter(card => card.country === "in")}
-                onBookmarkClick={handleBookmarkClick}
-                firstPart="Ind"
-                secondPart="ia"
-              />
-            )}
-          />
-          <Route
-            path="/australia"
-            render={() => (
-              <HomePage
-                cards={cards.filter(card => card.country === "au")}
-                onBookmarkClick={handleBookmarkClick}
-                firstPart="Austr"
-                secondPart="alia"
-              />
-            )}
-          />
-          <Route
-            path="/italy"
-            render={() => (
-              <HomePage
-                cards={cards.filter(card => card.country === "it")}
-                onBookmarkClick={handleBookmarkClick}
-                firstPart="Ita"
-                secondPart="ly"
-              />
-            )}
-          />
+
+          <Route path="/business" component={BusinessPage} />
+          <Route path="/entertainment" component={EntertainmentPage} />
+          <Route path="/health" component={HealthPage} />
+          <Route path="/science" component={SciencePage} />
+          <Route path="/technology" component={TechnologyPage} />
+          <Route path="/sports" component={SportsPage} />
+          <Route path="/us" component={USPage} />
+          <Route path="/uk" component={UKPage} />
+          <Route path="/france" component={FrancePage} />
+          <Route path="/india" component={IndiaPage} />
+          <Route path="/australia" component={AustraliaPage} />
+          <Route path="/italy" component={ItalyPage} />
+
           <Route
             path="/categories"
-            render={() => <Category firstPart="Cate" secondPart="gory" />}
+            render={() => (
+              <Category firstPart="Cate" secondPart="gory" cards={cards} />
+            )}
           />
           <Route
             path="/search"
@@ -231,6 +152,7 @@ export default function App() {
                 firstPart="Set"
                 secondPart="tings"
                 onDarkModeClick={handleDarkModeClick}
+                cards={cards}
               />
             )}
           />
@@ -243,7 +165,6 @@ export default function App() {
             render={() => <Reviews firstPart="Re" secondPart="views" />}
           />
         </Switch>
-        <NavigationNew bookmarkCount={bookmarkCount()} />
       </Router>
     </ThemeProvider>
   );

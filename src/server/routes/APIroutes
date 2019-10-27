@@ -1,0 +1,44 @@
+mongoose.connect("mongodb://localhost:27017/newsDB", (err, db) => {
+  db.collection("cards").save({
+    source: {
+      id: null,
+      name: "T-online.de"
+    },
+    author: "Manoj, t-online.de",
+    title:
+      'Donald Trump und die Ukraine-Affäre: "Ein unverschämter Versuch" - t-online.de',
+    description:
+      "Donald Trump sieht sich als Opfer eines Putsches. Die Demokraten stört das nicht. Sie setzen ihre Untersuchung zum Amtsenthebungsverfahren fort. Zu Recht, meinen die meisten der Kommentatoren.",
+    url:
+      "https://www.t-online.de/nachrichten/ausland/usa/id_86553712/donald-trump-und-die-ukraine-affaere-ein-unverschaemter-versuch-.html",
+    urlToImage:
+      "https://bilder.t-online.de/b/86/55/40/98/id_86554098/tid_da/donald-trump-der-us-praesident-steht-auch-in-der-presse-stark-in-der-kritik-.jpg",
+    publishedAt: "2019-10-02T10:56:00Z",
+    content:
+      'Donald Trump sieht sich als Opfer eines Putsches. Die Demokraten stört das nicht. Sie setzen ihre Untersuchung zum Amtsenthebungsverfahren fort. Zu Recht, meinen die meisten der Kommentatoren.\r\nFür den US-Sender CNN kommentiert Elie Honig: \r\n"Während der Ukra… [+3219 chars]'
+  });
+  db.close();
+});
+
+/ const found = cardsBookmark.some(item => item.title === cardData.title);
+    // console.log(found);
+    // if (!found) {
+    //   cardData.isBookmarked = true;
+    //   postBookmarkedCard(cardData).then(cardBookmark => {
+    //     setCardsBookmark([cardBookmark, ...cardsBookmark]);
+    //   });
+    // } else {
+    //   console.log("Card exists");
+    //   const cardDataID = cardsBookmark.find(
+    //     item => item.title === cardData.title
+    //   );
+    //   console.log(cardDataID._id);
+    //   deleteBookmarkedCard(cardDataID).then(
+    //     setCardsBookmark([...cardsBookmark])
+    //   );
+    // }
+
+    // const cardDataTitle = cardData.title
+    //   .replace(/ /g, "")
+    //   .replace(/[^a-zA-Z ]/g, "")
+    //   .toLowerCase();
