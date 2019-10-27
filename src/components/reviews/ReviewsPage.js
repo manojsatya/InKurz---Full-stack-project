@@ -8,7 +8,6 @@ import Review from "./Review";
 
 export default function Reviews({ firstPart, secondPart }) {
   const [reviews, setReviews] = useState([]);
-  //   getReviews().then(reviews => console.log(reviews));
 
   useEffect(() => {
     getReviews().then(setReviews);

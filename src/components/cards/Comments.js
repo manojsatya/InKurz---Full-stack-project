@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import styled from "styled-components/macro";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
+import jwtDecode from "jwt-decode";
 
 export default function Comments({
   id,
@@ -15,6 +16,16 @@ export default function Comments({
   const [editComment, setEditComment] = useState("");
   const [cardID, setCardID] = useState("");
   const [commentID, setCommentID] = useState("");
+  const [loggeduserID, setLoggedUserID] = useState("");
+
+  useEffect(() => {
+    if (localStorage.getItem("jwtToken")) {
+      const token = localStorage.getItem("jwtToken");
+      const decoded = jwtDecode(token);
+      const userID = decoded.user.id;
+      setLoggedUserID(userID);
+    }
+  }, [loggeduserID]);
 
   function handleDeleteClick(id, deleteComment) {
     handleDelete(id, deleteComment);
@@ -76,25 +87,27 @@ export default function Comments({
       <CommentsSectionStyled className={showComments ? "visible" : null}>
         {comments.map((item, index) => (
           <div key={item._id}>
-            <CommentsStyled>
+            <CommentsStyled key={item._id}>
               <img src={item.avatar} alt="img-1" />
 
               <p>
                 <strong>{item.name}: </strong> {item.comment}
               </p>
-              {/* <p>{item.comment}</p> */}
             </CommentsStyled>
-            <EditDeleteStyled>
-              <div>
-                <EditButtonStyled onClick={() => handleEditClick(id, item)}>
-                  edit
-                </EditButtonStyled>
-                {editForm()}
-              </div>
-              <DeleteButtonStyled onClick={() => handleDeleteClick(id, item)}>
-                delete
-              </DeleteButtonStyled>
-            </EditDeleteStyled>
+
+            {loggeduserID === item.user && (
+              <EditDeleteStyled>
+                <div>
+                  <EditButtonStyled onClick={() => handleEditClick(id, item)}>
+                    edit
+                  </EditButtonStyled>
+                  {editForm()}
+                </div>
+                <DeleteButtonStyled onClick={() => handleDeleteClick(id, item)}>
+                  delete
+                </DeleteButtonStyled>
+              </EditDeleteStyled>
+            )}
           </div>
         ))}
       </CommentsSectionStyled>
@@ -106,8 +119,6 @@ const CommentsSectionStyled = styled.section`
   max-height: 0;
   overflow: hidden;
   margin: 2px;
-  /* background-color: ${props =>
-    props.theme.mode === "dark" ? "white" : "wheat"}; */
   border-radius: 1rem;
   transition: all 0.5s ease;
 
@@ -123,15 +134,12 @@ const CommentsStyled = styled.section`
   margin: 2px;
   padding: 3px;
   font-size: 1.1rem;
-  /* border-bottom: 1px solid
-  ${props => (props.theme.mode === "dark" ? "brown" : "")}; */
   p {
     overflow-wrap: break-word;
     width: 100%;
     padding: 10px 5px 5px 10px;
     margin: auto 0;
     color: ${props => (props.theme.mode === "dark" ? "black" : "black")};
-    /* padding-left: 10px; */
     background: ${props => (props.theme.mode === "dark" ? "white" : "wheat")};
     border-radius: 0.5rem 0.5rem 0 0.5rem;
   }
@@ -140,8 +148,6 @@ const CommentsStyled = styled.section`
     height: 40px;
     border-radius: 50%;
   }
-
-  /* display: inline; */
 `;
 
 const EditDeleteStyled = styled.div`
@@ -150,12 +156,9 @@ const EditDeleteStyled = styled.div`
   padding-top: 0;
   margin-top: -6px;
   margin-right: 5px;
-  /* border-bottom: 1px solid
-    ${props => (props.theme.mode === "dark" ? "brown" : "white")}; */
 `;
 
 const EditButtonStyled = styled.button`
-  /* padding-right: 20px; */
   border: 0;
   background-color: ${props =>
     props.theme.mode === "dark" ? "white" : "wheat"};

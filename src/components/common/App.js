@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import HomePage from "../HomePage";
 import { ThemeProvider } from "styled-components";
 import { getCards, patchCard } from "../cards/servicesCard";
-import NavigationNew from "./NavigationNew";
 import Settings from "../Settings";
 import Feedback from "../Feedback";
 import Reviews from "../reviews/ReviewsPage";
@@ -40,11 +39,6 @@ export default function App() {
         ]);
       }
     );
-  }
-
-  function bookmarkCount() {
-    const bookmarkCountNum = cards.filter(card => card.isBookmarked).length;
-    return bookmarkCountNum;
   }
 
   function handleDarkModeClick() {
@@ -136,7 +130,9 @@ export default function App() {
 
           <Route
             path="/categories"
-            render={() => <Category firstPart="Cate" secondPart="gory" />}
+            render={() => (
+              <Category firstPart="Cate" secondPart="gory" cards={cards} />
+            )}
           />
           <Route
             path="/search"
@@ -156,6 +152,7 @@ export default function App() {
                 firstPart="Set"
                 secondPart="tings"
                 onDarkModeClick={handleDarkModeClick}
+                cards={cards}
               />
             )}
           />
@@ -168,7 +165,6 @@ export default function App() {
             render={() => <Reviews firstPart="Re" secondPart="views" />}
           />
         </Switch>
-        <NavigationNew bookmarkCount={bookmarkCount()} />
       </Router>
     </ThemeProvider>
   );

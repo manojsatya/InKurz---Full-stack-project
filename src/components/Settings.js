@@ -1,13 +1,17 @@
 import React, { useState, useEffect } from "react";
 import styled, { keyframes } from "styled-components/macro";
-// import PropTypes from "prop-types";
 import Title from "./common/Title";
-// import Feedback from "./Feedback";
 import { NavLink } from "react-router-dom";
 import Switch from "@material-ui/core/Switch";
 import jwtDecode from "jwt-decode";
+import NavigationNew from "./common/NavigationNew";
 
-export default function Settings({ firstPart, secondPart, onDarkModeClick }) {
+export default function Settings({
+  firstPart,
+  secondPart,
+  onDarkModeClick,
+  cards
+}) {
   const [user, setUser] = useState("");
   const [userImage, setUserImage] = useState("");
 
@@ -18,8 +22,6 @@ export default function Settings({ firstPart, secondPart, onDarkModeClick }) {
       const user = decoded.user.name;
       setUser(user);
       setUserImage(decoded.user.avatar);
-    } else {
-      console.log("No token");
     }
   }, [user]);
 
@@ -62,6 +64,11 @@ export default function Settings({ firstPart, secondPart, onDarkModeClick }) {
     }
   }
 
+  function bookmarkCount() {
+    const bookmarkCountNum = cards.filter(card => card.isBookmarked).length;
+    return bookmarkCountNum;
+  }
+
   return (
     <SettingsStyled>
       <Title firstPart={firstPart} secondPart={secondPart} />
@@ -83,13 +90,21 @@ export default function Settings({ firstPart, secondPart, onDarkModeClick }) {
           />
         </DarkModeStyled>
       </WrapperStyled>
+      <NavigationNew bookmarkCount={bookmarkCount()} />
     </SettingsStyled>
   );
 }
 
-// Settings.propTypes = {
-
-// }
+const PageTransitionIn = keyframes`
+from {
+    opacity: 0;
+    transform: translateY(100px);
+}
+to{
+    opacity: 1,
+    transform: translateY(0px)
+}
+`;
 
 const WrapperStyled = styled.div`
   display: flex;
@@ -98,14 +113,13 @@ const WrapperStyled = styled.div`
   max-width: 80%;
   margin: 0 auto;
   height: 70%;
-  /* margin: 100px auto 10px auto; */
+  animation: ${PageTransitionIn} 0.75s;
 `;
 
 const NavlinkStyled = styled(NavLink)`
   background-color: ${props =>
     props.theme.mode === "dark" ? "whitesmoke" : "#F9F6F2"};
   color: black;
-  /* text-align: center; */
   text-decoration: none;
   font-size: 1.1rem;
   padding: 30px 60px 30px 40px;
@@ -121,7 +135,6 @@ const DarkModeStyled = styled.section`
   padding: 20px 0px;
   border-radius: 0.5rem;
   box-shadow: 0 5px 10px gray;
-  /* margin-top: 90px; */
   p {
     padding-top: 5px;
     font-size: 1.1rem;
@@ -130,19 +143,8 @@ const DarkModeStyled = styled.section`
   }
 `;
 
-const PageTransitionIn = keyframes`
-from {
-    opacity: 0;
-    transform: translateY(100px);
-}
-to{
-    opacity: 1,
-    transform: translateY(0px)
-}
-`;
-
 const SettingsStyled = styled.div`
-  animation: ${PageTransitionIn} 0.75s;
+  /* animation: ${PageTransitionIn} 0.75s; */
 `;
 
 const ImgStyled = styled.img`

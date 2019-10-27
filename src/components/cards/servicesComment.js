@@ -17,7 +17,8 @@ export function patchComment(id, data) {
     method: "PATCH",
     body: JSON.stringify(data),
     headers: {
-      "content-type": "application/json"
+      "content-type": "application/json",
+      "x-auth-token": localStorage.getItem("jwtToken")
     }
   }).then(res => res.json());
 }

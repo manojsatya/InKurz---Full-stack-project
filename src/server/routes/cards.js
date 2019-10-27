@@ -63,7 +63,7 @@ router.post(
         user: req.user.id
       };
 
-      card.comments.unshift(newComment);
+      card.comments.push(newComment);
       await card.save();
       res.json(card);
     } catch (err) {
@@ -100,15 +100,41 @@ router.delete("/:id/comments/:comment_id", auth, async (req, res) => {
       .map(comment => comment.id)
       .indexOf(req.params.comment_id);
 
-    console.log(removeIndex);
     card.comments.splice(removeIndex, 1);
 
     await card.save();
 
     res.json(card);
   } catch (err) {
-    console.log(err.message);
     res.status(500).send("Server Error");
   }
+});
+
+// @route    GET /:id/comments
+// @desc     Get comments of a particular card by id
+// @access   Public
+router.get("/:id/comments", (req, res) => {
+  Card.findById(req.params.id)
+    .then(card => {
+      const comments = card.comments;
+      res.json(comments);
+    })
+    .catch(err => res.json(err));
+});
+
+// @route    PATCH /:id/comments/:comment_id
+// @desc     Patch a comment after edit
+// @access   Private
+
+router.patch("/:id/comments/:comment_id", (req, res) => {
+  Card.findByIdAndUpdate(req.params.id)
+    .then(card => {
+      const editedComment = card.comments.filter(comment => {
+        return comment._id.toString() === req.params.comment_id;
+      });
+      editedComment[0].comment = req.body.comment;
+      card.save().then(() => res.json(card));
+    })
+    .catch(err => res.json(err));
 });
 module.exports = router;

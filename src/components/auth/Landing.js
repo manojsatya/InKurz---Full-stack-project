@@ -8,9 +8,10 @@ export default function Landing() {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   useEffect(() => {
-    setTimeout(() => {
+    const timeout = setTimeout(() => {
       setError("");
     }, 6000);
+    return () => clearTimeout(timeout);
   }, [error]);
   const history = useHistory();
 
@@ -21,11 +22,9 @@ export default function Landing() {
     const data = Object.fromEntries(formData);
     postLoginUser(data).then(res => {
       if (res.token) {
-        console.log(res.token);
         localStorage.setItem("jwtToken", res.token);
         history.push("/mainpage");
       } else {
-        console.log(res.errors[0].msg);
         setError(res.errors[0].msg);
       }
     });
@@ -39,6 +38,7 @@ export default function Landing() {
       <LoginFormStyled onSubmit={event => handleLoginSubmit(event)}>
         <InputField>Email ID</InputField>
         <InputStyled
+          autoComplete="off"
           type="text"
           name="email"
           value={email}
@@ -51,7 +51,7 @@ export default function Landing() {
           value={password}
           onChange={event => setPassword(event.target.value)}
         />
-        <p>{error}</p>
+        <p style={{ color: "red" }}>{error}</p>
         <ButtonStyled type="submit">Login</ButtonStyled>
       </LoginFormStyled>
       <NavlinkStyled>
@@ -65,10 +65,7 @@ export default function Landing() {
 const NavlinkStyled = styled.section`
   display: flex;
   justify-content: space-around;
-  /* background-color: ${props =>
-    props.theme.mode === "dark" ? "#ffb930" : "#721313"}; */
   color: black;
-  /* text-align: center; */
 `;
 
 const LoginPageStyled = styled.div`
@@ -80,7 +77,6 @@ const LoginPageStyled = styled.div`
 const LoginFormStyled = styled.form`
   display: flex;
   flex-direction: column;
-  /* margin: 0 auto; */
 `;
 
 const ButtonStyled = styled.button`
@@ -90,7 +86,7 @@ const ButtonStyled = styled.button`
   margin: 20px;
   width: 85%;
   height: 35px;
-  outline: none;
+  outline: none !important;
   box-shadow: 0px 2px 5px grey;
   border-radius: 2rem;
 `;
