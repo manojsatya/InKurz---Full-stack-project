@@ -20,47 +20,6 @@ export default function Register() {
 
   const { name, email, password, password2 } = formData;
 
-  function onChange(event) {
-    setFormData({ ...formData, [event.target.name]: event.target.value });
-  }
-
-  function handleSubmit(event) {
-    event.preventDefault();
-    setNameError("");
-    setEmailError("");
-    setPasswordError("");
-    setPassword2Error("");
-    if (password === password2) {
-      postRegisterUser(formData).then(res => {
-        if (res.errors) {
-          for (let i = 0; i < res.errors.length; i++) {
-            if (res.errors[i].param === "name") {
-              setNameError(res.errors[i].msg);
-            } else if (res.errors[i].param === "email") {
-              setEmailError(res.errors[i].msg);
-            } else if (res.errors[i].param === "password") {
-              setPasswordError(res.errors[i].msg);
-            }
-          }
-        } else if (res.message) {
-          setUserError(res.message);
-        } else if (res.token) {
-          setUserError("");
-          setRegisterMsg("Registered Successfully");
-          setFormData({
-            ...formData,
-            name: "",
-            email: "",
-            password: "",
-            password2: ""
-          });
-        }
-      });
-    } else {
-      setPassword2Error("Passwords does not match");
-    }
-  }
-
   return (
     <RegisterStyled>
       <TitleStyled>
@@ -120,6 +79,47 @@ export default function Register() {
       </TitleLeadStyled>
     </RegisterStyled>
   );
+
+  function onChange(event) {
+    setFormData({ ...formData, [event.target.name]: event.target.value });
+  }
+
+  function handleSubmit(event) {
+    event.preventDefault();
+    setNameError("");
+    setEmailError("");
+    setPasswordError("");
+    setPassword2Error("");
+    if (password === password2) {
+      postRegisterUser(formData).then(res => {
+        if (res.errors) {
+          for (let i = 0; i < res.errors.length; i++) {
+            if (res.errors[i].param === "name") {
+              setNameError(res.errors[i].msg);
+            } else if (res.errors[i].param === "email") {
+              setEmailError(res.errors[i].msg);
+            } else if (res.errors[i].param === "password") {
+              setPasswordError(res.errors[i].msg);
+            }
+          }
+        } else if (res.message) {
+          setUserError(res.message);
+        } else if (res.token) {
+          setUserError("");
+          setRegisterMsg("Registered Successfully");
+          setFormData({
+            ...formData,
+            name: "",
+            email: "",
+            password: "",
+            password2: ""
+          });
+        }
+      });
+    } else {
+      setPassword2Error("Passwords does not match");
+    }
+  }
 }
 
 const InputStyled = styled.input`

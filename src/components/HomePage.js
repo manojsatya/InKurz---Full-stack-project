@@ -4,6 +4,14 @@ import Title from "./common/Title";
 import styled from "styled-components/macro";
 import { postComment } from "./cards/servicesComment";
 import NavigationNew from "./common/NavigationNew";
+import PropTypes from "prop-types";
+
+Homepage.propTypes = {
+  cards: PropTypes.array,
+  onBookmarkClick: PropTypes.func,
+  firstPart: PropTypes.string,
+  secondPart: PropTypes.string
+};
 
 export default function Homepage({
   cards,
@@ -11,14 +19,6 @@ export default function Homepage({
   firstPart,
   secondPart
 }) {
-  function onCommentSubmit(id, data) {
-    return postComment(id, data);
-  }
-
-  function bookmarkCount() {
-    const bookmarkCountNum = cards.filter(card => card.isBookmarked).length;
-    return bookmarkCountNum;
-  }
   return (
     <HomepageStyled>
       <Title firstPart={firstPart} secondPart={secondPart} />
@@ -33,6 +33,15 @@ export default function Homepage({
       <NavigationNew bookmarkCount={bookmarkCount()} />
     </HomepageStyled>
   );
+
+  function onCommentSubmit(id, data) {
+    return postComment(id, data);
+  }
+
+  function bookmarkCount() {
+    const bookmarkCountNum = cards.filter(card => card.isBookmarked).length;
+    return bookmarkCountNum;
+  }
 }
 
 const HomepageStyled = styled.section``;

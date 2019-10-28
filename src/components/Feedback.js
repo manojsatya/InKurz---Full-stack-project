@@ -1,25 +1,20 @@
 import React, { useState } from "react";
 import styled, { keyframes } from "styled-components/macro";
+import PropTypes from "prop-types";
 import Title from "./common/Title";
 import Rating from "@material-ui/lab/Rating";
 import { postReview } from "./reviews/servicesReview";
 import { NavLink } from "react-router-dom";
 import { LeftArrowCircle } from "styled-icons/boxicons-solid/LeftArrowCircle";
 
+Feedback.propTypes = {
+  firstPart: PropTypes.string,
+  secondPart: PropTypes.string
+};
+
 export default function Feedback({ firstPart, secondPart }) {
   const [review, setReview] = useState("");
   const [value, setValue] = useState(0);
-
-  function handleReviewSubmit(event) {
-    event.preventDefault();
-    const form = event.target;
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData);
-    postReview(data);
-    form.reset();
-    setValue(0);
-    setReview("");
-  }
 
   return (
     <WrapperStyled>
@@ -51,6 +46,17 @@ export default function Feedback({ firstPart, secondPart }) {
       </form>
     </WrapperStyled>
   );
+
+  function handleReviewSubmit(event) {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+    postReview(data);
+    form.reset();
+    setValue(0);
+    setReview("");
+  }
 }
 
 const PageTransitionIn = keyframes`

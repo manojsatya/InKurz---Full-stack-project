@@ -1,37 +1,13 @@
 import React from "react";
 import styled, { keyframes } from "styled-components/macro";
+import PropTypes from "prop-types";
 import Rating from "@material-ui/lab/Rating";
 
-function ShowReviews({ review, rating }) {
-  return (
-    <WrapperReview>
-      <ReviewStyled>
-        <ImgStyled src="https://source.unsplash.com/random" alt="face" />
-        <RatingStyled name="rating" value={rating} readOnly />
-        <p>{review}</p>
-      </ReviewStyled>
-    </WrapperReview>
-  );
-}
-
-function Bar({ value }) {
-  const barStyle = {
-    width: value,
-    height: "20px",
-    backgroundColor: "gold",
-    borderRadius: "0.5rem",
-    textAlign: "center"
-  };
-  return <div style={barStyle} />;
-}
+Review.propTypes = {
+  reviews: PropTypes.array
+};
 
 export default function Review({ reviews }) {
-  function calcRating(rating) {
-    return Math.ceil(
-      (reviews.filter(item => item.rating === rating).length / reviews.length) *
-        100
-    );
-  }
   return (
     <ReviewPageStyled>
       <StarRatingStyled>
@@ -77,6 +53,36 @@ export default function Review({ reviews }) {
       ))}
     </ReviewPageStyled>
   );
+
+  function calcRating(rating) {
+    return Math.ceil(
+      (reviews.filter(item => item.rating === rating).length / reviews.length) *
+        100
+    );
+  }
+}
+
+function ShowReviews({ review, rating }) {
+  return (
+    <WrapperReview>
+      <ReviewStyled>
+        <ImgStyled src="https://source.unsplash.com/random" alt="face" />
+        <RatingStyled name="rating" value={rating} readOnly />
+        <p>{review}</p>
+      </ReviewStyled>
+    </WrapperReview>
+  );
+}
+
+function Bar({ value }) {
+  const barStyle = {
+    width: value,
+    height: "20px",
+    backgroundColor: "gold",
+    borderRadius: "0.5rem",
+    textAlign: "center"
+  };
+  return <div style={barStyle} />;
 }
 
 const ReviewStyled = styled.section`

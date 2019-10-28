@@ -1,5 +1,6 @@
 import React from "react";
 import styled, { keyframes } from "styled-components/macro";
+import PropTypes from "prop-types";
 import Title from "./common/Title";
 import australia from "../assets/icons/australia.jpg";
 import business from "../assets/icons/business.jpg";
@@ -15,7 +16,24 @@ import uk from "../assets/icons/uk.jpg";
 import us from "../assets/icons/us.jpg";
 import NavigationNew from "./common/NavigationNew";
 
+Category.propTypes = {
+  firstPart: PropTypes.string,
+  secondPart: PropTypes.string,
+  cards: PropTypes.array
+};
+
 export default function Category({ firstPart, secondPart, cards }) {
+  return (
+    <div>
+      <Title firstPart={firstPart} secondPart={secondPart} />
+      <StyledH2>Topics:</StyledH2>
+      <CategoryGrid />
+      <StyledH2>Countries:</StyledH2>
+      <CountryGrid />
+      <NavigationNew bookmarkCount={bookmarkCount()} />
+    </div>
+  );
+
   function bookmarkCount() {
     const bookmarkCountNum = cards.filter(card => card.isBookmarked).length;
     return bookmarkCountNum;
@@ -109,16 +127,6 @@ export default function Category({ firstPart, secondPart, cards }) {
       </GridContainerStyed>
     );
   }
-  return (
-    <div>
-      <Title firstPart={firstPart} secondPart={secondPart} />
-      <StyledH2>Topics:</StyledH2>
-      <CategoryGrid />
-      <StyledH2>Countries:</StyledH2>
-      <CountryGrid />
-      <NavigationNew bookmarkCount={bookmarkCount()} />
-    </div>
-  );
 }
 
 const PageTransitionIn = keyframes`

@@ -1,5 +1,11 @@
 import React from "react";
 import styled from "styled-components/macro";
+import PropTypes from "prop-types";
+
+Title.propTypes = {
+  firstPart: PropTypes.string,
+  secondPart: PropTypes.string
+};
 
 export default function Title({ firstPart, secondPart }) {
   return (

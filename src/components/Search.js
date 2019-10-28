@@ -4,6 +4,14 @@ import styled, { keyframes } from "styled-components/macro";
 import Card from "./cards/Card";
 import { postComment } from "./cards/servicesComment";
 import NavigationNew from "./common/NavigationNew";
+import PropTypes from "prop-types";
+
+Search.propTypes = {
+  cards: PropTypes.array,
+  onBookmarkClick: PropTypes.func,
+  firstPart: PropTypes.string,
+  secondPart: PropTypes.string
+};
 
 export default function Search({
   cards,
@@ -12,21 +20,12 @@ export default function Search({
   secondPart
 }) {
   const [search, setSearch] = useState("");
-  function onCommentSubmit(id, data) {
-    return postComment(id, data);
-  }
-
   const searchedCards = cards
     .filter(card => card.description)
     .filter(
       card =>
         card.description.toLowerCase().indexOf(search.toLowerCase()) !== -1
     );
-
-  function bookmarkCount() {
-    const bookmarkCountNum = cards.filter(card => card.isBookmarked).length;
-    return bookmarkCountNum;
-  }
 
   return (
     <div>
@@ -65,6 +64,15 @@ export default function Search({
       <NavigationNew bookmarkCount={bookmarkCount()} />
     </div>
   );
+
+  function onCommentSubmit(id, data) {
+    return postComment(id, data);
+  }
+
+  function bookmarkCount() {
+    const bookmarkCountNum = cards.filter(card => card.isBookmarked).length;
+    return bookmarkCountNum;
+  }
 }
 const PageTransitionIn = keyframes`
 from {
