@@ -1,9 +1,17 @@
 import React, { useState, useEffect } from "react";
 import styled from "styled-components/macro";
+import PropTypes from "prop-types";
 import Dialog from "@material-ui/core/Dialog";
 import DialogContent from "@material-ui/core/DialogContent";
 import DialogTitle from "@material-ui/core/DialogTitle";
 import jwtDecode from "jwt-decode";
+
+Comments.propTypes = {
+  id: PropTypes.string,
+  showComments: PropTypes.bool,
+  handleDelete: PropTypes.func,
+  handleEdit: PropTypes.func
+};
 
 export default function Comments({
   id,
@@ -26,6 +34,38 @@ export default function Comments({
       setLoggedUserID(userID);
     }
   }, [loggeduserID]);
+
+  return (
+    <div>
+      <CommentsSectionStyled className={showComments ? "visible" : null}>
+        {comments.map((item, index) => (
+          <div key={item._id}>
+            <CommentsStyled key={item._id}>
+              <img src={item.avatar} alt="img-1" />
+
+              <p>
+                <strong>{item.name}: </strong> {item.comment}
+              </p>
+            </CommentsStyled>
+
+            {loggeduserID === item.user && (
+              <EditDeleteStyled>
+                <div>
+                  <EditButtonStyled onClick={() => handleEditClick(id, item)}>
+                    edit
+                  </EditButtonStyled>
+                  {editForm()}
+                </div>
+                <DeleteButtonStyled onClick={() => handleDeleteClick(id, item)}>
+                  delete
+                </DeleteButtonStyled>
+              </EditDeleteStyled>
+            )}
+          </div>
+        ))}
+      </CommentsSectionStyled>
+    </div>
+  );
 
   function handleDeleteClick(id, deleteComment) {
     handleDelete(id, deleteComment);
@@ -81,38 +121,6 @@ export default function Comments({
       </Dialog>
     );
   }
-
-  return (
-    <div>
-      <CommentsSectionStyled className={showComments ? "visible" : null}>
-        {comments.map((item, index) => (
-          <div key={item._id}>
-            <CommentsStyled key={item._id}>
-              <img src={item.avatar} alt="img-1" />
-
-              <p>
-                <strong>{item.name}: </strong> {item.comment}
-              </p>
-            </CommentsStyled>
-
-            {loggeduserID === item.user && (
-              <EditDeleteStyled>
-                <div>
-                  <EditButtonStyled onClick={() => handleEditClick(id, item)}>
-                    edit
-                  </EditButtonStyled>
-                  {editForm()}
-                </div>
-                <DeleteButtonStyled onClick={() => handleDeleteClick(id, item)}>
-                  delete
-                </DeleteButtonStyled>
-              </EditDeleteStyled>
-            )}
-          </div>
-        ))}
-      </CommentsSectionStyled>
-    </div>
-  );
 }
 
 const CommentsSectionStyled = styled.section`

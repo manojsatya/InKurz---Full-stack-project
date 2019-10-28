@@ -17,65 +17,7 @@ export default function App() {
   const [theme, setTheme] = useState({
     mode: localStorage.getItem("mode")
   });
-  useEffect(() => {
-    getCards().then(cards => {
-      cards.sort((a, b) => {
-        const dateA = new Date(a.publishedAt);
-        const dateB = new Date(b.publishedAt);
-        return dateB - dateA;
-      });
-      setCards(cards);
-    });
-  }, []);
 
-  function handleBookmarkClick(card) {
-    patchCard(card._id, { isBookmarked: !card.isBookmarked }).then(
-      updatedCard => {
-        const index = cards.findIndex(card => card._id === updatedCard._id);
-        setCards([
-          ...cards.slice(0, index),
-          { ...card, isBookmarked: updatedCard.isBookmarked },
-          ...cards.slice(index + 1)
-        ]);
-      }
-    );
-  }
-
-  function handleDarkModeClick() {
-    setTheme({ mode: localStorage.getItem("mode") });
-  }
-
-  function withHomePage(firstPart, secondPart, filterProp) {
-    return () => {
-      const filteredCards = filterProp
-        ? cards.filter(card => card.country === filterProp)
-        : cards;
-      return (
-        <HomePage
-          cards={filteredCards}
-          onBookmarkClick={handleBookmarkClick}
-          firstPart={firstPart}
-          secondPart={secondPart}
-        />
-      );
-    };
-  }
-
-  function withCategoryPage(firstPart, secondPart, filterProp) {
-    return () => {
-      const filteredCards = filterProp
-        ? cards.filter(card => card.category === filterProp)
-        : cards;
-      return (
-        <HomePage
-          cards={filteredCards}
-          onBookmarkClick={handleBookmarkClick}
-          firstPart={firstPart}
-          secondPart={secondPart}
-        />
-      );
-    };
-  }
   const MainPage = withHomePage("In", "Kurz", "de");
   const USPage = withHomePage("United", "States", "us");
   const UKPage = withHomePage("United", "Kingdom", "gb");
@@ -93,6 +35,17 @@ export default function App() {
   const SciencePage = withCategoryPage("Scie", "nce", "science");
   const TechnologyPage = withCategoryPage("Techno", "logy", "technology");
   const SportsPage = withCategoryPage("Spo", "rts", "sports");
+
+  useEffect(() => {
+    getCards().then(cards => {
+      cards.sort((a, b) => {
+        const dateA = new Date(a.publishedAt);
+        const dateB = new Date(b.publishedAt);
+        return dateB - dateA;
+      });
+      setCards(cards);
+    });
+  }, []);
 
   return (
     <ThemeProvider theme={theme}>
@@ -168,4 +121,53 @@ export default function App() {
       </Router>
     </ThemeProvider>
   );
+
+  function handleBookmarkClick(card) {
+    patchCard(card._id, { isBookmarked: !card.isBookmarked }).then(
+      updatedCard => {
+        const index = cards.findIndex(card => card._id === updatedCard._id);
+        setCards([
+          ...cards.slice(0, index),
+          { ...card, isBookmarked: updatedCard.isBookmarked },
+          ...cards.slice(index + 1)
+        ]);
+      }
+    );
+  }
+
+  function handleDarkModeClick() {
+    setTheme({ mode: localStorage.getItem("mode") });
+  }
+
+  function withHomePage(firstPart, secondPart, filterProp) {
+    return () => {
+      const filteredCards = filterProp
+        ? cards.filter(card => card.country === filterProp)
+        : cards;
+      return (
+        <HomePage
+          cards={filteredCards}
+          onBookmarkClick={handleBookmarkClick}
+          firstPart={firstPart}
+          secondPart={secondPart}
+        />
+      );
+    };
+  }
+
+  function withCategoryPage(firstPart, secondPart, filterProp) {
+    return () => {
+      const filteredCards = filterProp
+        ? cards.filter(card => card.category === filterProp)
+        : cards;
+      return (
+        <HomePage
+          cards={filteredCards}
+          onBookmarkClick={handleBookmarkClick}
+          firstPart={firstPart}
+          secondPart={secondPart}
+        />
+      );
+    };
+  }
 }

@@ -5,6 +5,14 @@ import { NavLink } from "react-router-dom";
 import Switch from "@material-ui/core/Switch";
 import jwtDecode from "jwt-decode";
 import NavigationNew from "./common/NavigationNew";
+import PropTypes from "prop-types";
+
+Settings.propTypes = {
+  firstPart: PropTypes.string,
+  secondPart: PropTypes.string,
+  onDarkModeClick: PropTypes.func,
+  cards: PropTypes.array
+};
 
 export default function Settings({
   firstPart,
@@ -24,6 +32,31 @@ export default function Settings({
       setUserImage(decoded.user.avatar);
     }
   }, [user]);
+
+  return (
+    <SettingsStyled>
+      <Title firstPart={firstPart} secondPart={secondPart} />
+
+      <WrapperStyled>
+        {checkUserLoggedIn()}
+
+        <NavlinkStyled to="/feedback"> Feedback/Suggestions</NavlinkStyled>
+
+        <NavlinkStyled to="/reviews">See All Reviews</NavlinkStyled>
+
+        <DarkModeStyled>
+          <p> Dark/Light mode</p>
+          <Switch
+            checked={getMode()}
+            onClick={event => handleDarkModeClick(event.target.checked)}
+            value="light"
+            inputProps={{ "aria-label": "secondary checkbox" }}
+          />
+        </DarkModeStyled>
+      </WrapperStyled>
+      <NavigationNew bookmarkCount={bookmarkCount()} />
+    </SettingsStyled>
+  );
 
   function handleDarkModeClick(event) {
     if (event) {
@@ -68,31 +101,6 @@ export default function Settings({
     const bookmarkCountNum = cards.filter(card => card.isBookmarked).length;
     return bookmarkCountNum;
   }
-
-  return (
-    <SettingsStyled>
-      <Title firstPart={firstPart} secondPart={secondPart} />
-
-      <WrapperStyled>
-        {checkUserLoggedIn()}
-
-        <NavlinkStyled to="/feedback"> Feedback/Suggestions</NavlinkStyled>
-
-        <NavlinkStyled to="/reviews">See All Reviews</NavlinkStyled>
-
-        <DarkModeStyled>
-          <p> Dark/Light mode</p>
-          <Switch
-            checked={getMode()}
-            onClick={event => handleDarkModeClick(event.target.checked)}
-            value="light"
-            inputProps={{ "aria-label": "secondary checkbox" }}
-          />
-        </DarkModeStyled>
-      </WrapperStyled>
-      <NavigationNew bookmarkCount={bookmarkCount()} />
-    </SettingsStyled>
-  );
 }
 
 const PageTransitionIn = keyframes`

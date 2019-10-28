@@ -2,12 +2,17 @@ import React from "react";
 import { makeStyles } from "@material-ui/core/styles";
 import { NavLink } from "react-router-dom";
 import styled from "styled-components/macro";
+import PropTypes from "prop-types";
 import { Home } from "styled-icons/boxicons-solid/Home";
 import { Bookmark } from "styled-icons/boxicons-solid/Bookmark";
 import { Grid } from "styled-icons/boxicons-solid/Grid";
 import { Settings } from "styled-icons/material/Settings";
 import { Search } from "styled-icons/octicons/Search";
 import Badge from "@material-ui/core/Badge";
+
+Navigation.propTypes = {
+  bookmarkCount: PropTypes.number
+};
 
 const useStyles = makeStyles(theme => ({
   margin: {

@@ -15,20 +15,6 @@ export default function Landing() {
   }, [error]);
   const history = useHistory();
 
-  function handleLoginSubmit(event) {
-    event.preventDefault();
-    const form = event.target;
-    const formData = new FormData(form);
-    const data = Object.fromEntries(formData);
-    postLoginUser(data).then(res => {
-      if (res.token) {
-        localStorage.setItem("jwtToken", res.token);
-        history.push("/mainpage");
-      } else {
-        setError(res.errors[0].msg);
-      }
-    });
-  }
   return (
     <LoginPageStyled>
       <TitleStyled>
@@ -60,6 +46,21 @@ export default function Landing() {
       </NavlinkStyled>
     </LoginPageStyled>
   );
+
+  function handleLoginSubmit(event) {
+    event.preventDefault();
+    const form = event.target;
+    const formData = new FormData(form);
+    const data = Object.fromEntries(formData);
+    postLoginUser(data).then(res => {
+      if (res.token) {
+        localStorage.setItem("jwtToken", res.token);
+        history.push("/mainpage");
+      } else {
+        setError(res.errors[0].msg);
+      }
+    });
+  }
 }
 
 const NavlinkStyled = styled.section`

@@ -14,6 +14,7 @@ import jwtDecode from "jwt-decode";
 Card.propTypes = {
   _id: PropTypes.string,
   title: PropTypes.string,
+  url: PropTypes.string,
   urlToImage: PropTypes.string,
   description: PropTypes.string,
   publishedAt: PropTypes.string,
@@ -27,7 +28,6 @@ export default function Card({
   title,
   url,
   urlToImage,
-  category,
   description,
   publishedAt,
   onBookmarkClick,
@@ -52,7 +52,13 @@ export default function Card({
   }, [isBookmarked]);
 
   useEffect(() => {
-    getComments(_id).then(setCommentsList);
+    let isFetched = true;
+    getComments(_id).then(comments => {
+      if (isFetched) {
+        setCommentsList(comments);
+      }
+    });
+    return () => (isFetched = false);
   }, [_id]);
 
   useEffect(() => {
@@ -63,6 +69,47 @@ export default function Card({
       setUserImage(decoded.user.avatar);
     }
   }, [userImage]);
+
+  return (
+    <CardStyled>
+      <ImgStyled src={urlToImage} alt="card_image" />
+      <ContentStyled>
+        <TimeStyled>{diffTime}</TimeStyled>
+        <h5>
+          <b>{title}</b>
+        </h5>
+        <p>
+          {description}
+          <a href={url} target="_blank" rel="noopener noreferrer">
+            Read More
+          </a>
+        </p>
+        <BelowContent>
+          <p onClick={toggleComments}>
+            {commentsList.length > 1 && commentsList.length + " "}
+
+            {commentsList.length === 0
+              ? ""
+              : commentsList.length === 1
+              ? "1 comment"
+              : "comments"}
+          </p>
+          {chooseBookmark()}
+        </BelowContent>
+        {loginRequest()}
+        <Comments
+          comments={commentsList}
+          showComments={isCommentsVisible}
+          id={_id}
+          handleDelete={handleDeleteComment}
+          handleEdit={handleEditComment}
+        />
+        {inputComment()}
+      </ContentStyled>
+
+      <FlashStyled>{msg}</FlashStyled>
+    </CardStyled>
+  );
 
   function toggleComments() {
     setisCommentsVisible(!isCommentsVisible);
@@ -162,47 +209,6 @@ export default function Card({
       </FormSection>
     );
   }
-
-  return (
-    <CardStyled>
-      <ImgStyled src={urlToImage} alt="card_image" />
-      <ContentStyled>
-        <TimeStyled>{diffTime}</TimeStyled>
-        <h5>
-          <b>{title}</b>
-        </h5>
-        <p>
-          {description}
-          <a href={url} target="_blank" rel="noopener noreferrer">
-            Read More
-          </a>
-        </p>
-        <BelowContent>
-          <p onClick={toggleComments}>
-            {commentsList.length > 1 && commentsList.length + " "}
-
-            {commentsList.length === 0
-              ? ""
-              : commentsList.length === 1
-              ? "1 comment"
-              : "comments"}
-          </p>
-          {chooseBookmark()}
-        </BelowContent>
-        {loginRequest()}
-        <Comments
-          comments={commentsList}
-          showComments={isCommentsVisible}
-          id={_id}
-          handleDelete={handleDeleteComment}
-          handleEdit={handleEditComment}
-        />
-        {inputComment()}
-      </ContentStyled>
-
-      <FlashStyled>{msg}</FlashStyled>
-    </CardStyled>
-  );
 }
 
 const ImgStyled = styled.img`
