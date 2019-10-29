@@ -16,7 +16,14 @@ export default function Reviews({ firstPart, secondPart }) {
   const [reviews, setReviews] = useState([]);
 
   useEffect(() => {
-    getReviews().then(setReviews);
+    getReviews().then(reviews => {
+      reviews.sort((a, b) => {
+        const dateA = new Date(a.reviewedAt);
+        const dateB = new Date(b.reviewedAt);
+        return dateB - dateA;
+      });
+      setReviews(reviews);
+    });
   }, []);
   return (
     <div>

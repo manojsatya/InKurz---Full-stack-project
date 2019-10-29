@@ -22,7 +22,7 @@ export default function Feedback({ firstPart, secondPart }) {
         <LeftArrowStyled />
       </NavLink>
       <Title firstPart={firstPart} secondPart={secondPart} />
-      <form onSubmit={handleReviewSubmit}>
+      <FormStyled onSubmit={handleReviewSubmit}>
         <Pstyled>How would you rate us?</Pstyled>
         <Rating
           name="rating"
@@ -43,7 +43,7 @@ export default function Feedback({ firstPart, secondPart }) {
         <CharStyled>{review.length}/250 characters </CharStyled>
 
         <ButtonStyled type="submit">Submit</ButtonStyled>
-      </form>
+      </FormStyled>
     </WrapperStyled>
   );
 
@@ -71,8 +71,7 @@ to{
 `;
 
 const WrapperStyled = styled.div`
-  animation: ${PageTransitionIn} 0.75s;
-  margin: 20px;
+  margin: 0px 20px 20px 20px;
 `;
 
 const Pstyled = styled.p`
@@ -113,4 +112,8 @@ const LeftArrowStyled = styled(LeftArrowCircle)`
   top: 15px;
   left: 10px;
   width: 35px;
+`;
+
+const FormStyled = styled.form`
+  animation: ${PageTransitionIn} 0.75s;
 `;
