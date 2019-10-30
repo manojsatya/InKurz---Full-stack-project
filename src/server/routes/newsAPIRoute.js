@@ -35,4 +35,5 @@ getArticles().then(data => {
     db.collection("cards").insertMany(data);
   });
 });
+
 // });
