@@ -2,8 +2,8 @@ const mongoose = require("mongoose");
 const fetch = require("node-fetch");
 // var schedule = require("node-schedule");
 // var rule = new schedule.RecurrenceRule();
-
-const country = "de";
+// rule.minute = 20;
+const country = "de"
 const category = "";
 
 function getArticles() {
@@ -35,5 +35,4 @@ getArticles().then(data => {
     db.collection("cards").insertMany(data);
   });
 });
-
 // });

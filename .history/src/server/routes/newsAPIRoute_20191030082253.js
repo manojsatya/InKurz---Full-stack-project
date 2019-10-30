@@ -2,13 +2,13 @@ const mongoose = require("mongoose");
 const fetch = require("node-fetch");
 // var schedule = require("node-schedule");
 // var rule = new schedule.RecurrenceRule();
-
-const country = "de";
+// rule.minute = 20;
+const country = "in";
 const category = "";
 
 function getArticles() {
   return fetch(
-    `https://newsapi.org/v2/top-headlines?country=de&apiKey=020b3817a9ee4c8387dd3bcfac3eb12e`
+    `https://newsapi.org/v2/top-headlines?country=in&apiKey=020b3817a9ee4c8387dd3bcfac3eb12e`
   )
     .then(res => res.json())
     .then(result => {
@@ -35,5 +35,4 @@ getArticles().then(data => {
     db.collection("cards").insertMany(data);
   });
 });
-
 // });
