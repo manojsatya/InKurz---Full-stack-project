@@ -8,7 +8,7 @@ const category = "";
 
 function getArticles() {
   return fetch(
-    `https://newsapi.org/v2/top-headlines?country=de&apiKey=020b3817a9ee4c8387dd3bcfac3eb12e`
+    `https://newsapi.org/v2/top-headlines?country=de&apiKey=???`
   )
     .then(res => res.json())
     .then(result => {
