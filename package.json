@@ -64,7 +64,7 @@
     "@storybook/addon-actions": "^6.1.2",
     "@storybook/addon-info": "^5.3.21",
     "@storybook/addon-links": "^5.2.1",
-    "@storybook/addons": "^6.1.1",
+    "@storybook/addons": "^6.1.4",
     "@storybook/react": "^6.1.4",
     "cypress": "^3.5.0",
     "eslint-plugin-cypress": "^2.7.0"
