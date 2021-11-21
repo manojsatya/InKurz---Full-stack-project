@@ -63,7 +63,7 @@ src/server/routes/newsAPIRoute.js
 Change the country according to your needs and change in fetch request url as well. For example :
 
 ```
-  https://newsapi.org/v2/top-headlines?country=in&apiKey=020b3817a9ee4c8387dd3bcfac3eb12e&category=science
+  https://newsapi.org/v2/top-headlines?country=in&apiKey=???&category=science
 ```
 
 You need to install MongoDB or already installed. It can reachable by default port [http://localhost:27017](http://localhost:27017)
